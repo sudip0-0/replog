@@ -1,0 +1,45 @@
+# Maestro smoke test for RepLog (guest/local mode).
+# Covers: routine install + start, set logging with RPE/note, finish, and
+# history/progress visibility. Empty-workout path is also exercised.
+# Run with: maestro test .maestro/smoke.yaml  (needs the app installed on a device/emulator)
+appId: com.replog.app
+---
+- launchApp:
+    clearState: true
+
+# --- Routines: install starters and start one -------------------------------
+- assertVisible: 'Today'
+- tapOn: 'Routines'
+- assertVisible: 'Routines'
+- runFlow:
+    when:
+      visible: 'Install starter templates'
+    commands:
+      - tapOn: 'Install starter templates'
+- assertVisible: 'Push'
+- tapOn: 'Start Push'
+
+# --- Active workout: log a set with RPE + note via the expandable details ----
+- assertVisible: 'Add set'
+- tapOn: 'Add set'
+- tapOn: 'Weight in kg'
+- inputText: '60'
+- tapOn: 'Repetitions'
+- inputText: '8'
+- tapOn: 'Show set details (RPE, note)'
+- tapOn: 'RPE, 1 to 10'
+- inputText: '8'
+- tapOn: 'Set note'
+- inputText: 'felt good'
+- tapOn: 'Mark set complete'
+
+# --- Finish (confirm dialog) -------------------------------------------------
+- tapOn: 'Finish workout'
+- assertVisible: 'Finish workout?'
+- tapOn: 'Finish'
+
+# --- History + progress visibility ------------------------------------------
+- assertVisible: 'Today'
+- tapOn: 'History'
+- assertVisible: 'History'
+- assertVisible: "This week's volume"

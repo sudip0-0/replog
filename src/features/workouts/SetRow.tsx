@@ -27,9 +27,10 @@ interface Props {
   onCommit: (patch: Partial<SetRecord>) => void;
   onToggleComplete: () => void;
   onRemove: () => void;
+  onInputFocus?: () => void;
 }
 
-export function SetRow({ set, unit, onCommit, onToggleComplete, onRemove }: Props) {
+export function SetRow({ set, unit, onCommit, onToggleComplete, onRemove, onInputFocus }: Props) {
   const [weight, setWeight] = useState(set.weight_kg ? String(fromKg(set.weight_kg, unit)) : '');
   const [reps, setReps] = useState(set.reps ? String(set.reps) : '');
   const [rpe, setRpe] = useState(set.rpe != null ? String(set.rpe) : '');
@@ -64,7 +65,7 @@ export function SetRow({ set, unit, onCommit, onToggleComplete, onRemove }: Prop
     <View style={[styles.wrap, set.completed && styles.completedWrap]}>
       <View style={styles.header}>
         <Text style={[ui.label, styles.typeLabel]}>Set</Text>
-        <Text style={[ui.label, styles.previousLabel]}>Previous</Text>
+        <Text style={[ui.label, styles.previousLabel]}>Prev</Text>
         <Text style={[ui.label, styles.valueLabel]}>{unit}</Text>
         <Text style={[ui.label, styles.valueLabel]}>Reps</Text>
         <Text style={[ui.label, styles.doneLabel]}>Done</Text>
@@ -95,6 +96,7 @@ export function SetRow({ set, unit, onCommit, onToggleComplete, onRemove }: Prop
           accessibilityLabel={`Weight in ${unit}`}
           style={styles.input}
           contentStyle={[ui.dataText, styles.inputContent]}
+          onFocus={onInputFocus}
         />
         <TextInput
           dense
@@ -108,6 +110,7 @@ export function SetRow({ set, unit, onCommit, onToggleComplete, onRemove }: Prop
           accessibilityLabel="Repetitions"
           style={styles.input}
           contentStyle={[ui.dataText, styles.inputContent]}
+          onFocus={onInputFocus}
         />
         <IconButton
           icon={set.completed ? 'check-circle' : 'circle-outline'}
@@ -157,6 +160,7 @@ export function SetRow({ set, unit, onCommit, onToggleComplete, onRemove }: Prop
             onEndEditing={commitRpe}
             error={!!errors.rpe}
             accessibilityLabel="RPE, 1 to 10"
+            onFocus={onInputFocus}
           />
           {errors.rpe ? (
             <HelperText type="error" visible>
@@ -171,6 +175,7 @@ export function SetRow({ set, unit, onCommit, onToggleComplete, onRemove }: Prop
             onChangeText={setNote}
             onEndEditing={() => onCommit({ note: note.trim() || null })}
             accessibilityLabel="Set note"
+            onFocus={onInputFocus}
           />
           {plateText ? (
             <Text variant="bodySmall" style={styles.plateText} accessibilityLabel={`Plate calculator. ${plateText}`}>
@@ -189,16 +194,16 @@ const styles = StyleSheet.create({
     borderColor: replogColors.outline,
     borderRadius: 8,
     borderWidth: 1,
-    gap: 4,
-    padding: 8,
+    gap: 3,
+    padding: 6,
   },
   completedWrap: { backgroundColor: '#1D1A10', borderColor: replogColors.primary },
-  header: { alignItems: 'center', flexDirection: 'row', gap: 8 },
-  typeLabel: { width: 76 },
-  previousLabel: { flex: 1, minWidth: 48 },
-  valueLabel: { flex: 1, minWidth: 58, textAlign: 'center' },
+  header: { alignItems: 'center', flexDirection: 'row', gap: 6 },
+  typeLabel: { width: 68 },
+  previousLabel: { color: replogColors.textDim, width: 38 },
+  valueLabel: { flex: 1, minWidth: 48, textAlign: 'center' },
   doneLabel: { textAlign: 'center', width: 44 },
-  row: { alignItems: 'center', flexDirection: 'row', gap: 8 },
+  row: { alignItems: 'center', flexDirection: 'row', gap: 6 },
   type: {
     backgroundColor: 'transparent',
     borderColor: replogColors.outline,
@@ -206,16 +211,16 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     height: 44,
     justifyContent: 'center',
-    width: 76,
+    width: 68,
   },
-  chipText: { color: replogColors.textMuted, fontSize: 12, fontWeight: '700' },
+  chipText: { color: replogColors.textMuted, fontSize: 11, fontWeight: '700' },
   normal: {},
   warmup: { backgroundColor: '#112836', borderColor: '#25546A' },
   drop: { backgroundColor: '#251B34', borderColor: '#4C3769' },
   failure: { backgroundColor: '#371919', borderColor: '#703333' },
-  previousValue: { color: replogColors.textDim, flex: 1, minWidth: 48 },
-  input: { backgroundColor: replogColors.surface, flex: 1, height: 48, minWidth: 58 },
-  inputContent: { color: replogColors.text, textAlign: 'center' },
+  previousValue: { color: replogColors.textDim, width: 38 },
+  input: { backgroundColor: replogColors.surface, flex: 1, height: 48, minWidth: 48 },
+  inputContent: { color: replogColors.text, fontSize: 18, textAlign: 'center' },
   done: { borderRadius: 8, height: 44, margin: 0, width: 44 },
   tools: { flexDirection: 'row', justifyContent: 'flex-end', marginTop: -2 },
   toolButton: { height: 32, margin: 0, width: 44 },

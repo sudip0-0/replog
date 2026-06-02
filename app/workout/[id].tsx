@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { useEffect, useRef, useState } from 'react';
+import { Keyboard, KeyboardAvoidingView, ScrollView, StyleSheet, View } from 'react-native';
 import { ActivityIndicator, Button, Dialog, Portal, Text } from 'react-native-paper';
 import { router, useLocalSearchParams } from 'expo-router';
 import { useWorkoutDetail, useFinishWorkout } from '@/features/workouts/useWorkout';
@@ -14,6 +14,19 @@ export default function WorkoutScreen() {
   const { data, isLoading } = useWorkoutDetail(id);
   const finish = useFinishWorkout(id);
   const [confirm, setConfirm] = useState(false);
+  const [keyboardHeight, setKeyboardHeight] = useState(0);
+  const scrollRef = useRef<ScrollView>(null);
+
+  useEffect(() => {
+    const show = Keyboard.addListener('keyboardDidShow', (event) => {
+      setKeyboardHeight(event.endCoordinates.height);
+    });
+    const hide = Keyboard.addListener('keyboardDidHide', () => setKeyboardHeight(0));
+    return () => {
+      show.remove();
+      hide.remove();
+    };
+  }, []);
 
   if (isLoading) return <ActivityIndicator style={{ marginTop: 32 }} />;
   if (!data) return <Text style={styles.notFound}>Workout not found.</Text>;
@@ -23,12 +36,15 @@ export default function WorkoutScreen() {
   };
 
   return (
-    <ScrollView
-      style={styles.screen}
-      contentContainerStyle={styles.content}
-      contentInsetAdjustmentBehavior="automatic"
-      keyboardShouldPersistTaps="handled"
-    >
+    <KeyboardAvoidingView style={styles.screen} behavior="padding" keyboardVerticalOffset={80}>
+      <ScrollView
+        ref={scrollRef}
+        style={styles.screen}
+        contentContainerStyle={[styles.content, { paddingBottom: keyboardHeight ? keyboardHeight + 160 : 72 }]}
+        contentInsetAdjustmentBehavior="automatic"
+        keyboardShouldPersistTaps="handled"
+        keyboardDismissMode="interactive"
+      >
       <View style={styles.workoutHeader}>
         <Text style={ui.label}>Active workout</Text>
         <Text variant="headlineSmall" style={styles.title}>
@@ -42,7 +58,17 @@ export default function WorkoutScreen() {
         </Text>
       ) : (
         data.exercises.map((d) => (
-          <WorkoutExerciseCard key={d.workoutExercise.id} workoutId={id} detail={d} unit={unit} />
+          <WorkoutExerciseCard
+            key={d.workoutExercise.id}
+            workoutId={id}
+            detail={d}
+            unit={unit}
+            onInputFocus={() => {
+              if (keyboardHeight) {
+                requestAnimationFrame(() => scrollRef.current?.scrollToEnd({ animated: true }));
+              }
+            }}
+          />
         ))
       )}
 
@@ -79,14 +105,15 @@ export default function WorkoutScreen() {
           </Dialog.Actions>
         </Dialog>
       </Portal>
-      <View style={{ height: 24 }} />
-    </ScrollView>
+        <View style={{ height: 24 }} />
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 }
 
 const styles = StyleSheet.create({
   screen: { backgroundColor: replogColors.base },
-  content: { gap: 8, padding: 16, paddingBottom: 48 },
+  content: { gap: 8, padding: 16 },
   notFound: { color: replogColors.text, margin: 16 },
   workoutHeader: {
     backgroundColor: replogColors.surface,

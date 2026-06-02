@@ -18,9 +18,10 @@ interface Props {
   workoutId: string;
   detail: WorkoutExerciseDetail;
   unit: WeightUnit;
+  onInputFocus?: () => void;
 }
 
-export function WorkoutExerciseCard({ workoutId, detail, unit }: Props) {
+export function WorkoutExerciseCard({ workoutId, detail, unit, onInputFocus }: Props) {
   const { exercise, sets, workoutExercise } = detail;
   const addSet = useAddSet(workoutId);
   const updateSet = useUpdateSet(workoutId);
@@ -59,6 +60,7 @@ export function WorkoutExerciseCard({ workoutId, detail, unit }: Props) {
             onCommit={(patch) => updateSet.mutate({ id: s.id, patch })}
             onToggleComplete={() => updateSet.mutate({ id: s.id, patch: { completed: !s.completed } })}
             onRemove={() => removeSet.mutate(s.id)}
+            onInputFocus={onInputFocus}
           />
         ))}
         <View style={styles.footer}>

@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
-import { View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { Button, Text } from 'react-native-paper';
 import { useRestTimer } from '@/store/sessionStore';
+import { replogColors } from '@/theme';
+import { ui } from '@/theme/styles';
 
 const PRESETS = [60, 90, 120, 180];
 
@@ -23,8 +25,8 @@ export function RestTimer({ id }: { id: string }) {
 
   if (endsAt && remaining > 0) {
     return (
-      <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
-        <Text variant="titleMedium" accessibilityLabel={`Rest ${remaining} seconds remaining`}>
+      <View style={[ui.row, styles.active]}>
+        <Text variant="titleMedium" style={styles.activeText} accessibilityLabel={`Rest ${remaining} seconds remaining`}>
           Rest {remaining}s
         </Text>
         <Button compact onPress={() => stop(id)} accessibilityLabel="Skip rest">
@@ -35,7 +37,7 @@ export function RestTimer({ id }: { id: string }) {
   }
 
   return (
-    <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 6 }}>
+    <View style={styles.presets}>
       {PRESETS.map((s) => (
         <Button
           key={s}
@@ -50,3 +52,9 @@ export function RestTimer({ id }: { id: string }) {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  active: { alignItems: 'center', flexDirection: 'row', gap: 8, justifyContent: 'space-between', padding: 8 },
+  activeText: { color: replogColors.primary, fontVariant: ['tabular-nums'], fontWeight: '700' },
+  presets: { flexDirection: 'row', flexWrap: 'wrap', gap: 6 },
+});

@@ -6,7 +6,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
-import { darkTheme, lightTheme } from '@/theme';
+import { darkTheme, lightTheme, replogColors } from '@/theme';
 import { useUIStore } from '@/store/uiStore';
 
 const queryClient = new QueryClient({
@@ -27,9 +27,10 @@ export function AppProviders({ children }: { children: ReactNode }) {
         ...base.colors,
         primary: paperTheme.colors.primary,
         background: paperTheme.colors.background,
-        card: paperTheme.colors.elevation.level2,
+        card: replogColors.surface,
         text: paperTheme.colors.onSurface,
-        border: paperTheme.colors.outlineVariant,
+        border: replogColors.outline,
+        notification: replogColors.primary,
       },
     };
   }, [isDark, paperTheme]);
@@ -40,7 +41,7 @@ export function AppProviders({ children }: { children: ReactNode }) {
         <QueryClientProvider client={queryClient}>
           <PaperProvider theme={paperTheme}>
             <ThemeProvider value={navTheme}>
-              <StatusBar style={isDark ? 'light' : 'dark'} />
+              <StatusBar style="light" />
               {children}
             </ThemeProvider>
           </PaperProvider>

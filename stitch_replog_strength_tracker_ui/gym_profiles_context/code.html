@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Gym Profiles</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-secondary": "#2d3038",
+                      "error-container": "#93000a",
+                      "secondary": "#c4c6d0",
+                      "secondary-fixed": "#e0e2ec",
+                      "on-secondary-fixed": "#191c23",
+                      "on-error": "#690005",
+                      "secondary-container": "#44474f",
+                      "on-secondary-container": "#b3b5be",
+                      "on-primary": "#3e2e00",
+                      "on-primary-fixed-variant": "#594400",
+                      "on-background": "#e3e2e6",
+                      "surface-bright": "#38393c",
+                      "primary-fixed": "#ffdf95",
+                      "tertiary-fixed": "#b8eaff",
+                      "surface-variant": "#343538",
+                      "on-secondary-fixed-variant": "#44474f",
+                      "error": "#ffb4ab",
+                      "inverse-surface": "#e3e2e6",
+                      "surface": "#121316",
+                      "outline-variant": "#4e4634",
+                      "tertiary-fixed-dim": "#63d4fa",
+                      "primary": "#ffe5aa",
+                      "surface-container-lowest": "#0d0e11",
+                      "surface-container-low": "#1b1b1f",
+                      "on-surface": "#e3e2e6",
+                      "on-tertiary-fixed-variant": "#004d61",
+                      "on-primary-fixed": "#251a00",
+                      "on-tertiary-container": "#005e74",
+                      "surface-tint": "#f0c03e",
+                      "on-tertiary": "#003544",
+                      "tertiary-container": "#69d9ff",
+                      "primary-container": "#f5c542",
+                      "secondary-fixed-dim": "#c4c6d0",
+                      "on-primary-container": "#6b5200",
+                      "surface-container-high": "#292a2d",
+                      "inverse-on-surface": "#303034",
+                      "primary-fixed-dim": "#f0c03e",
+                      "inverse-primary": "#765a00",
+                      "surface-container": "#1f1f23",
+                      "background": "#121316",
+                      "outline": "#9a907b",
+                      "surface-container-highest": "#343538",
+                      "on-error-container": "#ffdad6",
+                      "on-surface-variant": "#d1c5ae",
+                      "tertiary": "#c5eeff",
+                      "surface-dim": "#121316",
+                      "on-tertiary-fixed": "#001f28"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "base": "4px",
+                      "lg": "24px",
+                      "xs": "8px",
+                      "container-margin": "16px",
+                      "xl": "32px",
+                      "md": "16px",
+                      "sm": "12px",
+                      "gutter": "12px"
+              },
+              "fontFamily": {
+                      "body-lg": ["Inter"],
+                      "display-lg": ["Inter"],
+                      "headline-md": ["Inter"],
+                      "body-md": ["Inter"],
+                      "data-lg": ["Inter"],
+                      "headline-sm": ["Inter"],
+                      "label-md": ["Inter"]
+              },
+              "fontSize": {
+                      "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                      "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                      "data-lg": ["20px", {"lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                      "headline-sm": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                      "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}]
+              }
+            }
+          }
+        }
+    </script>
+<style>
+        body { background-color: #090A0D; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .material-symbols-outlined.fill { font-variation-settings: 'FILL' 1; }
+        .radio-custom:checked + div { border-color: #F5C542; }
+        .radio-custom:checked + div .radio-inner { background-color: #F5C542; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="text-on-surface font-body-lg min-h-screen flex flex-col pb-24">
+<!-- TopAppBar -->
+<header class="flex justify-between items-center h-14 w-full px-md bg-surface border-b border-outline-variant docked full-width top-0 z-50">
+<button class="text-primary hover:bg-surface-container-highest transition-colors rounded-full p-2 flex items-center justify-center active:opacity-70 transition-opacity">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<h1 class="font-display-lg text-display-lg font-bold text-primary">RepLog</h1>
+<button class="text-primary hover:bg-surface-container-highest transition-colors rounded-full p-2 flex items-center justify-center active:opacity-70 transition-opacity">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</header>
+<main class="flex-1 px-container-margin pt-md max-w-2xl mx-auto w-full">
+<h2 class="font-headline-md text-headline-md text-on-surface mb-lg">Gym Profiles</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mb-lg">Exercise notes are saved against the active gym. Switch profiles to view notes for the equipment you are currently using.</p>
+<!-- Gym List -->
+<div class="space-y-sm mb-xl">
+<!-- Gym Item: General (Default) -->
+<label class="flex items-center justify-between p-md bg-[#181B22] border border-[#252A33] rounded-lg cursor-pointer hover:bg-surface-container transition-colors">
+<div class="flex items-center gap-md">
+<div class="relative flex items-center justify-center w-6 h-6">
+<input class="radio-custom sr-only" name="gym_profile" type="radio" value="general"/>
+<div class="w-5 h-5 rounded-full border-2 border-[#252A33] flex items-center justify-center transition-colors">
+<div class="radio-inner w-2.5 h-2.5 rounded-full transition-colors"></div>
+</div>
+</div>
+<span class="font-headline-sm text-headline-sm">General</span>
+</div>
+</label>
+<!-- Gym Item: Downtown Strength (Selected) -->
+<label class="flex items-center justify-between p-md bg-[#181B22] border border-[#F5C542] rounded-lg cursor-pointer hover:bg-surface-container transition-colors">
+<div class="flex items-center gap-md">
+<div class="relative flex items-center justify-center w-6 h-6">
+<input checked="" class="radio-custom sr-only" name="gym_profile" type="radio" value="downtown"/>
+<div class="w-5 h-5 rounded-full border-2 border-[#F5C542] flex items-center justify-center transition-colors">
+<div class="radio-inner w-2.5 h-2.5 rounded-full bg-[#F5C542] transition-colors"></div>
+</div>
+</div>
+<span class="font-headline-sm text-headline-sm">Downtown Strength</span>
+</div>
+<button aria-label="Delete gym" class="text-on-surface-variant hover:text-error transition-colors p-2 -mr-2">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</label>
+<!-- Gym Item: Iron House -->
+<label class="flex items-center justify-between p-md bg-[#181B22] border border-[#252A33] rounded-lg cursor-pointer hover:bg-surface-container transition-colors">
+<div class="flex items-center gap-md">
+<div class="relative flex items-center justify-center w-6 h-6">
+<input class="radio-custom sr-only" name="gym_profile" type="radio" value="ironhouse"/>
+<div class="w-5 h-5 rounded-full border-2 border-[#252A33] flex items-center justify-center transition-colors">
+<div class="radio-inner w-2.5 h-2.5 rounded-full transition-colors"></div>
+</div>
+</div>
+<span class="font-headline-sm text-headline-sm">Iron House</span>
+</div>
+<button aria-label="Delete gym" class="text-on-surface-variant hover:text-error transition-colors p-2 -mr-2">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</label>
+<!-- Gym Item: Hotel Gym -->
+<label class="flex items-center justify-between p-md bg-[#181B22] border border-[#252A33] rounded-lg cursor-pointer hover:bg-surface-container transition-colors">
+<div class="flex items-center gap-md">
+<div class="relative flex items-center justify-center w-6 h-6">
+<input class="radio-custom sr-only" name="gym_profile" type="radio" value="hotel"/>
+<div class="w-5 h-5 rounded-full border-2 border-[#252A33] flex items-center justify-center transition-colors">
+<div class="radio-inner w-2.5 h-2.5 rounded-full transition-colors"></div>
+</div>
+</div>
+<span class="font-headline-sm text-headline-sm">Hotel Gym</span>
+</div>
+<button aria-label="Delete gym" class="text-on-surface-variant hover:text-error transition-colors p-2 -mr-2">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</label>
+</div>
+<!-- Add New Gym -->
+<div class="flex flex-col gap-sm">
+<input class="w-full h-[48px] bg-[#121419] border border-[#252A33] rounded-lg px-md font-body-lg text-body-lg text-on-surface placeholder-on-surface-variant focus:border-primary focus:outline-none focus:ring-0 transition-colors" placeholder="New gym name" type="text"/>
+<button class="w-full h-[48px] bg-primary-container text-on-primary-container font-headline-sm text-headline-sm rounded-lg active:scale-95 transition-transform duration-150 flex items-center justify-center gap-xs">
+<span class="material-symbols-outlined font-bold">add</span>
+                Add gym
+            </button>
+</div>
+</main>
+<!-- BottomNavBar (Settings Context implies Profile/Settings active) -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center h-16 px-container-margin bg-surface-container/80 backdrop-blur-md border-t border-outline-variant z-50">
+<a class="flex flex-col items-center justify-center text-on-surface-variant pt-1 hover:bg-surface-container-high transition-colors active:scale-95 duration-150 rounded-lg px-4 h-full" href="#">
+<span class="material-symbols-outlined">fitness_center</span>
+<span class="font-label-md text-label-md hidden">Today</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant pt-1 hover:bg-surface-container-high transition-colors active:scale-95 duration-150 rounded-lg px-4 h-full" href="#">
+<span class="material-symbols-outlined">assignment</span>
+<span class="font-label-md text-label-md hidden">Routines</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant pt-1 hover:bg-surface-container-high transition-colors active:scale-95 duration-150 rounded-lg px-4 h-full" href="#">
+<span class="material-symbols-outlined">history</span>
+<span class="font-label-md text-label-md hidden">History</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary border-t-2 border-primary pt-1 hover:bg-surface-container-high transition-colors active:scale-95 duration-150 px-4 h-full" href="#">
+<span class="material-symbols-outlined fill">person</span>
+<span class="font-label-md text-label-md">Profile</span>
+</a>
+</nav>
+<script>
+        // Simple script to handle radio selection styling since CSS sibling selectors can be tricky with specific DOM structures
+        document.querySelectorAll('input[type="radio"][name="gym_profile"]').forEach(radio => {
+            radio.addEventListener('change', (e) => {
+                // Reset all
+                document.querySelectorAll('input[type="radio"][name="gym_profile"]').forEach(r => {
+                    const label = r.closest('label');
+                    label.classList.remove('border-[#F5C542]');
+                    label.classList.add('border-[#252A33]');
+                    const innerCircle = label.querySelector('.radio-inner');
+                    innerCircle.classList.remove('bg-[#F5C542]');
+                    const outerCircle = label.querySelector('.rounded-full.border-2');
+                    outerCircle.classList.remove('border-[#F5C542]');
+                    outerCircle.classList.add('border-[#252A33]');
+                });
+                
+                // Set active
+                if(e.target.checked) {
+                    const label = e.target.closest('label');
+                    label.classList.remove('border-[#252A33]');
+                    label.classList.add('border-[#F5C542]');
+                    const innerCircle = label.querySelector('.radio-inner');
+                    innerCircle.classList.add('bg-[#F5C542]');
+                    const outerCircle = label.querySelector('.rounded-full.border-2');
+                    outerCircle.classList.remove('border-[#252A33]');
+                    outerCircle.classList.add('border-[#F5C542]');
+                }
+            });
+        });
+    </script>
+</body></html>

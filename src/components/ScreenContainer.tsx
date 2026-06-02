@@ -18,7 +18,12 @@ export function ScreenContainer({ children, scroll = true }: Props) {
   ];
   if (scroll) {
     return (
-      <ScrollView style={{ backgroundColor: theme.colors.background }} contentContainerStyle={style}>
+      <ScrollView
+        style={{ backgroundColor: theme.colors.background }}
+        contentContainerStyle={style}
+        contentInsetAdjustmentBehavior="automatic"
+        keyboardShouldPersistTaps="handled"
+      >
         {children}
       </ScrollView>
     );
@@ -28,5 +33,5 @@ export function ScreenContainer({ children, scroll = true }: Props) {
 
 const styles = StyleSheet.create({
   flex: { flex: 1 },
-  content: { padding: 16, gap: 12 },
+  content: { gap: 12, padding: 16 },
 });

@@ -1,27 +1,28 @@
 import { useState } from 'react';
-import { FlatList, View } from 'react-native';
+import { FlatList, StyleSheet, View } from 'react-native';
 import { ActivityIndicator, List, Searchbar, Text } from 'react-native-paper';
 import { useExerciseSearch } from './useExercises';
 import type { Exercise } from '@/domain/schemas';
+import { replogColors } from '@/theme';
 
 interface Props {
   onSelect?: (exercise: Exercise) => void;
   actionIcon?: string;
 }
 
-/** Searchable list of exercises from the local library. */
 export function ExercisePicker({ onSelect, actionIcon = 'plus' }: Props) {
   const [query, setQuery] = useState('');
   const { data, isLoading } = useExerciseSearch(query);
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={styles.screen}>
       <Searchbar
         placeholder="Search exercises"
         value={query}
         onChangeText={setQuery}
         accessibilityLabel="Search exercises"
-        style={{ margin: 12 }}
+        style={styles.search}
+        inputStyle={styles.searchInput}
       />
       {isLoading ? (
         <ActivityIndicator style={{ marginTop: 24 }} />
@@ -29,16 +30,20 @@ export function ExercisePicker({ onSelect, actionIcon = 'plus' }: Props) {
         <FlatList
           data={data ?? []}
           keyExtractor={(e) => e.id}
-          ListEmptyComponent={
-            <Text style={{ textAlign: 'center', marginTop: 24 }}>No exercises found.</Text>
-          }
+          contentContainerStyle={styles.list}
+          contentInsetAdjustmentBehavior="automatic"
+          keyboardShouldPersistTaps="handled"
+          ListEmptyComponent={<Text style={styles.empty}>No exercises found.</Text>}
           renderItem={({ item }) => (
             <List.Item
               title={item.name}
-              description={`${item.primary_muscle} · ${item.equipment}`}
+              description={`${item.primary_muscle} / ${item.equipment}`}
               onPress={onSelect ? () => onSelect(item) : undefined}
               accessibilityLabel={`${item.name}, ${item.primary_muscle}`}
-              right={(p) => (onSelect ? <List.Icon {...p} icon={actionIcon} /> : null)}
+              right={(p) => (onSelect ? <List.Icon {...p} icon={actionIcon} color={replogColors.primary} /> : null)}
+              style={styles.row}
+              titleStyle={styles.rowTitle}
+              descriptionStyle={styles.rowDescription}
             />
           )}
         />
@@ -46,3 +51,26 @@ export function ExercisePicker({ onSelect, actionIcon = 'plus' }: Props) {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  screen: { backgroundColor: replogColors.base, flex: 1 },
+  search: {
+    backgroundColor: replogColors.surfaceLow,
+    borderColor: replogColors.outline,
+    borderRadius: 8,
+    borderWidth: 1,
+    margin: 12,
+  },
+  searchInput: { color: replogColors.text },
+  list: { gap: 8, padding: 12, paddingTop: 0 },
+  row: {
+    backgroundColor: replogColors.surfaceLow,
+    borderColor: replogColors.outline,
+    borderRadius: 8,
+    borderWidth: 1,
+    minHeight: 56,
+  },
+  rowTitle: { color: replogColors.text, fontWeight: '700' },
+  rowDescription: { color: replogColors.textMuted },
+  empty: { color: replogColors.textMuted, marginTop: 24, textAlign: 'center' },
+});

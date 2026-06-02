@@ -1,5 +1,5 @@
-import { ScrollView, View } from 'react-native';
-import { ActivityIndicator, Card, Chip, Divider, List, Text } from 'react-native-paper';
+import { StyleSheet, View } from 'react-native';
+import { ActivityIndicator, Card, Chip, List, Text } from 'react-native-paper';
 import { useLocalSearchParams } from 'expo-router';
 import {
   useExerciseHistory,
@@ -9,6 +9,9 @@ import {
 import { Sparkline } from '@/features/progress/Sparkline';
 import { fromKg } from '@/domain/units';
 import { useUIStore } from '@/store/uiStore';
+import { ScreenContainer } from '@/components/ScreenContainer';
+import { replogColors } from '@/theme';
+import { ui } from '@/theme/styles';
 
 export default function ExerciseDetailScreen() {
   const { id, name } = useLocalSearchParams<{ id: string; name?: string }>();
@@ -23,29 +26,33 @@ export default function ExerciseDetailScreen() {
   const latest = history?.[history.length - 1];
 
   return (
-    <ScrollView contentContainerStyle={{ padding: 16, gap: 12, paddingBottom: 48 }}>
-      <Text variant="headlineSmall">{name ?? 'Exercise'}</Text>
+    <ScreenContainer>
+      <Text variant="headlineSmall" style={styles.title}>
+        {name ?? 'Exercise'}
+      </Text>
 
-      <Card mode="contained">
-        <Card.Content>
-          <Text variant="titleMedium">Progression suggestion</Text>
-          <Text variant="bodyMedium" style={{ marginTop: 4 }}>
-            {suggestion.data?.explanation ?? 'Loading…'}
+      <Card mode="contained" style={ui.card}>
+        <Card.Content style={styles.cardContent}>
+          <Text style={ui.label}>Progression</Text>
+          <Text variant="bodyMedium" style={styles.muted}>
+            {suggestion.data?.explanation ?? 'Loading...'}
           </Text>
         </Card.Content>
       </Card>
 
       {!history || history.length === 0 ? (
-        <Text variant="bodyMedium">No completed sessions yet for this exercise.</Text>
+        <Text variant="bodyMedium" style={styles.muted}>
+          No completed sessions yet for this exercise.
+        </Text>
       ) : (
         <>
-          <Card mode="contained">
-            <Card.Content style={{ gap: 4 }}>
-              <Text variant="titleMedium">Latest session</Text>
-              <Text>Best weight: {w(latest?.bestWeightKg ?? 0)}</Text>
-              <Text>Est. 1RM: {w(latest?.estimatedOneRepMax ?? 0)}</Text>
-              <Text>Total reps: {latest?.totalReps ?? 0}</Text>
-              <Text>Volume: {w(latest?.totalVolume ?? 0)}</Text>
+          <Card mode="contained" style={ui.card}>
+            <Card.Content style={styles.cardContent}>
+              <Text style={ui.label}>Latest session</Text>
+              <Metric label="Best weight" value={w(latest?.bestWeightKg ?? 0)} />
+              <Metric label="Est. 1RM" value={w(latest?.estimatedOneRepMax ?? 0)} />
+              <Metric label="Total reps" value={`${latest?.totalReps ?? 0}`} />
+              <Metric label="Volume" value={w(latest?.totalVolume ?? 0)} />
             </Card.Content>
           </Card>
 
@@ -54,22 +61,49 @@ export default function ExerciseDetailScreen() {
         </>
       )}
 
-      <View>
-        <Text variant="titleMedium">Personal records</Text>
-        <Divider style={{ marginVertical: 4 }} />
+      <View style={[ui.card, styles.cardContent]}>
+        <Text style={ui.label}>Personal records</Text>
         {!prs || prs.length === 0 ? (
-          <Text variant="bodySmall">No PRs yet.</Text>
+          <Text variant="bodySmall" style={styles.muted}>
+            No PRs yet.
+          </Text>
         ) : (
           prs.slice(0, 10).map((pr) => (
             <List.Item
               key={pr.id}
-              title={`${pr.kind.toUpperCase()} · ${w(pr.value)}`}
+              title={`${pr.kind.toUpperCase()} / ${w(pr.value)}`}
               description={pr.reps ? `${pr.reps} reps` : undefined}
-              left={() => <Chip compact style={{ alignSelf: 'center' }}>{pr.kind}</Chip>}
+              left={() => (
+                <Chip compact style={styles.prChip} textStyle={styles.prText}>
+                  {pr.kind}
+                </Chip>
+              )}
+              titleStyle={styles.rowTitle}
+              descriptionStyle={styles.muted}
             />
           ))
         )}
       </View>
-    </ScrollView>
+    </ScreenContainer>
   );
 }
+
+function Metric({ label, value }: { label: string; value: string }) {
+  return (
+    <View style={styles.metricRow}>
+      <Text style={styles.muted}>{label}</Text>
+      <Text style={styles.metricValue}>{value}</Text>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  title: { color: replogColors.text, fontWeight: '700' },
+  cardContent: { gap: 8, padding: 12 },
+  muted: { color: replogColors.textMuted },
+  metricRow: { flexDirection: 'row', justifyContent: 'space-between' },
+  metricValue: { ...ui.dataText, color: replogColors.text, fontSize: 16, lineHeight: 20 },
+  prChip: { alignSelf: 'center', backgroundColor: replogColors.warningContainer, borderRadius: 4 },
+  prText: { color: replogColors.primary, fontWeight: '700' },
+  rowTitle: { color: replogColors.text, fontWeight: '700' },
+});

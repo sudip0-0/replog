@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ScrollView, View } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import {
   ActivityIndicator,
   Button,
@@ -19,6 +19,8 @@ import {
   useDeleteRoutine,
 } from '@/features/routines/useRoutines';
 import { useStartFlow } from '@/features/workouts/useStartFlow';
+import { replogColors } from '@/theme';
+import { ui } from '@/theme/styles';
 
 export default function RoutinesScreen() {
   const { data: routines, isLoading } = useRoutines();
@@ -35,14 +37,21 @@ export default function RoutinesScreen() {
   if (isLoading) return <ActivityIndicator style={{ marginTop: 32 }} />;
 
   return (
-    <ScrollView contentContainerStyle={{ padding: 16, gap: 12, paddingBottom: 48 }}>
-      <Text variant="headlineMedium">Routines</Text>
+    <ScrollView style={styles.screen} contentContainerStyle={styles.content} contentInsetAdjustmentBehavior="automatic">
+      <Text variant="headlineMedium" style={styles.title}>
+        Routines
+      </Text>
 
       {routines && routines.length === 0 ? (
-        <Card mode="contained">
-          <Card.Content style={{ gap: 8 }}>
-            <Text variant="titleMedium">No routines yet</Text>
-            <Text variant="bodyMedium">Install starter splits or create your own.</Text>
+        <Card mode="contained" style={ui.card}>
+          <Card.Content style={styles.cardContent}>
+            <Text style={ui.label}>Templates</Text>
+            <Text variant="titleMedium" style={styles.cardTitle}>
+              No routines yet
+            </Text>
+            <Text variant="bodyMedium" style={styles.muted}>
+              Install starter splits or create your own.
+            </Text>
             <Button
               mode="contained"
               loading={install.isPending}
@@ -55,63 +64,53 @@ export default function RoutinesScreen() {
         </Card>
       ) : (
         routines?.map((r) => (
-          <Card key={r.id} mode="contained">
-            <Card.Title
-              title={r.name}
-              right={(p) => (
-                <View style={{ flexDirection: 'row' }}>
+          <Card key={r.id} mode="contained" style={ui.card}>
+            <Card.Content style={styles.cardContent}>
+              <View style={styles.rowHeader}>
+                <Text variant="titleMedium" style={styles.cardTitle}>
+                  {r.name}
+                </Text>
+                <View style={styles.iconRow}>
                   <IconButton
-                    {...p}
                     icon="content-copy"
                     onPress={() => duplicate.mutate(r.id)}
                     accessibilityLabel={`Duplicate ${r.name}`}
                   />
                   <IconButton
-                    {...p}
                     icon="delete-outline"
                     onPress={() => remove.mutate(r.id)}
                     accessibilityLabel={`Delete ${r.name}`}
                   />
                 </View>
-              )}
-            />
-            <Card.Actions>
-              <Button
-                onPress={() => router.push({ pathname: '/routine/[id]', params: { id: r.id } })}
-                accessibilityLabel={`Edit ${r.name}`}
-              >
-                Edit
-              </Button>
-              <Button
-                mode="contained"
-                onPress={() => onStart(r.id)}
-                accessibilityLabel={`Start ${r.name}`}
-              >
-                Start
-              </Button>
-            </Card.Actions>
+              </View>
+              <View style={styles.actions}>
+                <Button onPress={() => router.push({ pathname: '/routine/[id]', params: { id: r.id } })} accessibilityLabel={`Edit ${r.name}`}>
+                  Edit
+                </Button>
+                <Button mode="contained" onPress={() => onStart(r.id)} accessibilityLabel={`Start ${r.name}`}>
+                  Start
+                </Button>
+              </View>
+            </Card.Content>
           </Card>
         ))
       )}
 
-      <Button icon="plus" onPress={() => setDialog(true)} accessibilityLabel="Create routine">
+      <Button mode="outlined" icon="plus" onPress={() => setDialog(true)} accessibilityLabel="Create routine">
         Create routine
       </Button>
 
       <Portal>
-        <Dialog visible={dialog} onDismiss={() => setDialog(false)}>
+        <Dialog visible={dialog} onDismiss={() => setDialog(false)} style={ui.sheet}>
+          <View style={ui.grabber} />
           <Dialog.Title>New routine</Dialog.Title>
           <Dialog.Content>
-            <TextInput
-              label="Name"
-              value={name}
-              onChangeText={setName}
-              accessibilityLabel="Routine name"
-            />
+            <TextInput label="Name" value={name} onChangeText={setName} accessibilityLabel="Routine name" />
           </Dialog.Content>
           <Dialog.Actions>
             <Button onPress={() => setDialog(false)}>Cancel</Button>
             <Button
+              mode="contained"
               onPress={() => {
                 const n = name.trim();
                 if (!n) return;
@@ -132,3 +131,15 @@ export default function RoutinesScreen() {
     </ScrollView>
   );
 }
+
+const styles = StyleSheet.create({
+  screen: { backgroundColor: replogColors.base },
+  content: { gap: 12, padding: 16, paddingBottom: 48 },
+  title: { color: replogColors.text, fontWeight: '700' },
+  cardContent: { gap: 8 },
+  cardTitle: { color: replogColors.text, fontWeight: '700' },
+  muted: { color: replogColors.textMuted },
+  rowHeader: { alignItems: 'center', flexDirection: 'row', justifyContent: 'space-between' },
+  iconRow: { flexDirection: 'row' },
+  actions: { flexDirection: 'row', gap: 8, justifyContent: 'flex-end' },
+});

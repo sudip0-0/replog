@@ -5,6 +5,8 @@ import type { SetRecord, SetType } from '@/domain/schemas';
 import { fromKg, type WeightUnit } from '@/domain/units';
 import { parseReps, parseRpe, parseWeight } from '@/domain/setValidation';
 import { barbellPlates } from '@/domain/plates';
+import { replogColors } from '@/theme';
+import { ui } from '@/theme/styles';
 
 const TYPE_ORDER: SetType[] = ['normal', 'warmup', 'drop', 'failure'];
 const TYPE_LABEL: Record<SetType, string> = {
@@ -27,7 +29,6 @@ interface Props {
   onRemove: () => void;
 }
 
-/** A single editable set row: compact by default; expandable for RPE/note/plates. */
 export function SetRow({ set, unit, onCommit, onToggleComplete, onRemove }: Props) {
   const [weight, setWeight] = useState(set.weight_kg ? String(fromKg(set.weight_kg, unit)) : '');
   const [reps, setReps] = useState(set.reps ? String(set.reps) : '');
@@ -60,53 +61,82 @@ export function SetRow({ set, unit, onCommit, onToggleComplete, onRemove }: Prop
     : null;
 
   return (
-    <View>
+    <View style={[styles.wrap, set.completed && styles.completedWrap]}>
+      <View style={styles.header}>
+        <Text style={[ui.label, styles.typeLabel]}>Set</Text>
+        <Text style={[ui.label, styles.previousLabel]}>Previous</Text>
+        <Text style={[ui.label, styles.valueLabel]}>{unit}</Text>
+        <Text style={[ui.label, styles.valueLabel]}>Reps</Text>
+        <Text style={[ui.label, styles.doneLabel]}>Done</Text>
+      </View>
+
       <View style={styles.row}>
         <Chip
           compact
           onPress={() => onCommit({ set_type: nextSetType(set.set_type) })}
           accessibilityLabel={`Set type ${TYPE_LABEL[set.set_type]}, tap to change`}
-          style={styles.type}
+          style={[styles.type, styles[set.set_type]]}
+          textStyle={styles.chipText}
         >
           {TYPE_LABEL[set.set_type]}
         </Chip>
+        <Text variant="bodySmall" numberOfLines={1} style={styles.previousValue}>
+          -
+        </Text>
         <TextInput
           dense
           mode="outlined"
           keyboardType="numeric"
-          label={unit}
+          label=""
           value={weight}
           onChangeText={setWeight}
           onEndEditing={commitWeight}
           error={!!errors.weight}
           accessibilityLabel={`Weight in ${unit}`}
           style={styles.input}
+          contentStyle={[ui.dataText, styles.inputContent]}
         />
-        <Text style={styles.times}>×</Text>
         <TextInput
           dense
           mode="outlined"
           keyboardType="number-pad"
-          label="reps"
+          label=""
           value={reps}
           onChangeText={setReps}
           onEndEditing={commitReps}
           error={!!errors.reps}
           accessibilityLabel="Repetitions"
           style={styles.input}
-        />
-        <IconButton
-          icon={expanded ? 'chevron-up' : 'chevron-down'}
-          onPress={() => setExpanded((v) => !v)}
-          accessibilityLabel={expanded ? 'Hide set details' : 'Show set details (RPE, note)'}
+          contentStyle={[ui.dataText, styles.inputContent]}
         />
         <IconButton
           icon={set.completed ? 'check-circle' : 'circle-outline'}
           onPress={onToggleComplete}
           accessibilityLabel={set.completed ? 'Mark set incomplete' : 'Mark set complete'}
           accessibilityState={{ checked: set.completed }}
+          iconColor={set.completed ? replogColors.onPrimary : replogColors.textMuted}
+          containerColor={set.completed ? replogColors.primary : replogColors.surface}
+          style={styles.done}
         />
-        <IconButton icon="delete-outline" onPress={onRemove} accessibilityLabel="Remove set" />
+      </View>
+
+      <View style={styles.tools}>
+        <IconButton
+          icon={expanded ? 'chevron-up' : 'chevron-down'}
+          onPress={() => setExpanded((v) => !v)}
+          accessibilityLabel={expanded ? 'Hide set details' : 'Show set details (RPE, note)'}
+          iconColor={replogColors.textMuted}
+          size={20}
+          style={styles.toolButton}
+        />
+        <IconButton
+          icon="delete-outline"
+          onPress={onRemove}
+          accessibilityLabel="Remove set"
+          iconColor={replogColors.textDim}
+          size={20}
+          style={styles.toolButton}
+        />
       </View>
 
       {(errors.weight || errors.reps) && (
@@ -143,8 +173,8 @@ export function SetRow({ set, unit, onCommit, onToggleComplete, onRemove }: Prop
             accessibilityLabel="Set note"
           />
           {plateText ? (
-            <Text variant="bodySmall" accessibilityLabel={`Plate calculator. ${plateText}`}>
-              🏋 {plateText}
+            <Text variant="bodySmall" style={styles.plateText} accessibilityLabel={`Plate calculator. ${plateText}`}>
+              Plates: {plateText}
             </Text>
           ) : null}
         </View>
@@ -154,9 +184,41 @@ export function SetRow({ set, unit, onCommit, onToggleComplete, onRemove }: Prop
 }
 
 const styles = StyleSheet.create({
-  row: { flexDirection: 'row', alignItems: 'center', gap: 2 },
-  type: { minWidth: 76 },
-  input: { flex: 1, height: 44 },
-  times: { marginHorizontal: 2 },
-  details: { gap: 6, paddingLeft: 8, paddingBottom: 8 },
+  wrap: {
+    backgroundColor: replogColors.surfaceLow,
+    borderColor: replogColors.outline,
+    borderRadius: 8,
+    borderWidth: 1,
+    gap: 4,
+    padding: 8,
+  },
+  completedWrap: { backgroundColor: '#1D1A10', borderColor: replogColors.primary },
+  header: { alignItems: 'center', flexDirection: 'row', gap: 8 },
+  typeLabel: { width: 76 },
+  previousLabel: { flex: 1, minWidth: 48 },
+  valueLabel: { flex: 1, minWidth: 58, textAlign: 'center' },
+  doneLabel: { textAlign: 'center', width: 44 },
+  row: { alignItems: 'center', flexDirection: 'row', gap: 8 },
+  type: {
+    backgroundColor: 'transparent',
+    borderColor: replogColors.outline,
+    borderRadius: 4,
+    borderWidth: 1,
+    height: 44,
+    justifyContent: 'center',
+    width: 76,
+  },
+  chipText: { color: replogColors.textMuted, fontSize: 12, fontWeight: '700' },
+  normal: {},
+  warmup: { backgroundColor: '#112836', borderColor: '#25546A' },
+  drop: { backgroundColor: '#251B34', borderColor: '#4C3769' },
+  failure: { backgroundColor: '#371919', borderColor: '#703333' },
+  previousValue: { color: replogColors.textDim, flex: 1, minWidth: 48 },
+  input: { backgroundColor: replogColors.surface, flex: 1, height: 48, minWidth: 58 },
+  inputContent: { color: replogColors.text, textAlign: 'center' },
+  done: { borderRadius: 8, height: 44, margin: 0, width: 44 },
+  tools: { flexDirection: 'row', justifyContent: 'flex-end', marginTop: -2 },
+  toolButton: { height: 32, margin: 0, width: 44 },
+  details: { gap: 8, paddingBottom: 4, paddingTop: 4 },
+  plateText: { color: replogColors.textMuted },
 });

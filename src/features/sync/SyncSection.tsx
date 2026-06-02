@@ -1,9 +1,10 @@
-import { View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { Button, HelperText, Text } from 'react-native-paper';
 import { useAuth } from '@/features/auth/useAuth';
 import { useSyncNow } from './useSync';
+import { replogColors } from '@/theme';
+import { ui } from '@/theme/styles';
 
-/** Visible sync controls/status. Only meaningful when signed in + configured. */
 export function SyncSection() {
   const { configured, status } = useAuth();
   const sync = useSyncNow();
@@ -14,15 +15,17 @@ export function SyncSection() {
     status !== 'authenticated'
       ? 'Sign in to sync your data to the cloud.'
       : sync.isPending
-        ? 'Syncing…'
+        ? 'Syncing...'
         : sync.isSuccess
           ? `Last sync: pushed ${sync.data.pushed}, pulled ${sync.data.pulled}.`
           : 'Local changes will sync on demand.';
 
   return (
-    <View style={{ gap: 8 }}>
-      <Text variant="titleMedium">Sync</Text>
-      <Text variant="bodyMedium">{statusText}</Text>
+    <View style={styles.wrap}>
+      <Text style={ui.label}>Sync</Text>
+      <Text variant="bodyMedium" style={styles.muted}>
+        {statusText}
+      </Text>
       {sync.isError ? (
         <HelperText type="error" visible>
           {(sync.error as Error).message}
@@ -41,3 +44,8 @@ export function SyncSection() {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  wrap: { gap: 8, padding: 12 },
+  muted: { color: replogColors.textMuted },
+});

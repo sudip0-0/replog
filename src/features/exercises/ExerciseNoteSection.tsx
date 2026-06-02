@@ -1,9 +1,11 @@
 import { useState } from 'react';
-import { View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { Button, Dialog, HelperText, Portal, Text, TextInput } from 'react-native-paper';
 import { useExerciseNote, useUpsertNote } from './useNotes';
 import { hasNoteContent, type NoteFields } from './noteService';
 import { useUIStore } from '@/store/uiStore';
+import { replogColors } from '@/theme';
+import { ui } from '@/theme/styles';
 
 const FIELDS: { key: keyof NoteFields; label: string }[] = [
   { key: 'machine_settings', label: 'Machine settings' },
@@ -33,7 +35,7 @@ export function ExerciseNoteSection({ exerciseId }: { exerciseId: string }) {
   };
 
   return (
-    <View>
+    <View style={styles.wrap}>
       {hasNoteContent(note ?? null) ? (
         FIELDS.filter((f) => note?.[f.key]).map((f) => (
           <HelperText key={f.key} type="info" visible accessibilityLabel={`${f.label}: ${note?.[f.key]}`}>
@@ -41,14 +43,17 @@ export function ExerciseNoteSection({ exerciseId }: { exerciseId: string }) {
           </HelperText>
         ))
       ) : (
-        <Text variant="bodySmall">No notes yet.</Text>
+        <Text variant="bodySmall" style={styles.muted}>
+          No notes yet.
+        </Text>
       )}
       <Button compact icon="note-edit-outline" onPress={open} accessibilityLabel="Edit exercise notes">
         Notes
       </Button>
 
       <Portal>
-        <Dialog visible={editing} onDismiss={() => setEditing(false)}>
+        <Dialog visible={editing} onDismiss={() => setEditing(false)} style={ui.sheet}>
+          <View style={ui.grabber} />
           <Dialog.Title>Exercise notes</Dialog.Title>
           <Dialog.ScrollArea>
             <View style={{ gap: 8, paddingVertical: 8 }}>
@@ -84,3 +89,14 @@ export function ExerciseNoteSection({ exerciseId }: { exerciseId: string }) {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  wrap: {
+    backgroundColor: replogColors.surface,
+    borderColor: replogColors.outline,
+    borderRadius: 8,
+    borderWidth: 1,
+    padding: 8,
+  },
+  muted: { color: replogColors.textDim },
+});

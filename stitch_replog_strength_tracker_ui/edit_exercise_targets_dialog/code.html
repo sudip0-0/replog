@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Edit Exercise Targets</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary": "#2d3038", "error-container": "#93000a", "secondary": "#c4c6d0", "secondary-fixed": "#e0e2ec", "on-secondary-fixed": "#191c23", "on-error": "#690005", "secondary-container": "#44474f", "on-secondary-container": "#b3b5be", "on-primary": "#3e2e00", "on-primary-fixed-variant": "#594400", "on-background": "#e3e2e6", "surface-bright": "#38393c", "primary-fixed": "#ffdf95", "tertiary-fixed": "#b8eaff", "surface-variant": "#343538", "on-secondary-fixed-variant": "#44474f", "error": "#ffb4ab", "inverse-surface": "#e3e2e6", "surface": "#121316", "outline-variant": "#4e4634", "tertiary-fixed-dim": "#63d4fa", "primary": "#ffe5aa", "surface-container-lowest": "#0d0e11", "surface-container-low": "#1b1b1f", "on-surface": "#e3e2e6", "on-tertiary-fixed-variant": "#004d61", "on-primary-fixed": "#251a00", "on-tertiary-container": "#005e74", "surface-tint": "#f0c03e", "on-tertiary": "#003544", "tertiary-container": "#69d9ff", "primary-container": "#f5c542", "secondary-fixed-dim": "#c4c6d0", "on-primary-container": "#6b5200", "surface-container-high": "#292a2d", "inverse-on-surface": "#303034", "primary-fixed-dim": "#f0c03e", "inverse-primary": "#765a00", "surface-container": "#1f1f23", "background": "#121316", "outline": "#9a907b", "surface-container-highest": "#343538", "on-error-container": "#ffdad6", "on-surface-variant": "#d1c5ae", "tertiary": "#c5eeff", "surface-dim": "#121316", "on-tertiary-fixed": "#001f28"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "base": "4px", "lg": "24px", "xs": "8px", "container-margin": "16px", "xl": "32px", "md": "16px", "sm": "12px", "gutter": "12px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Inter"], "display-lg": ["Inter"], "headline-md": ["Inter"], "body-md": ["Inter"], "data-lg": ["Inter"], "headline-sm": ["Inter"], "label-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "display-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "data-lg": ["20px", { "lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "headline-sm": ["18px", { "lineHeight": "24px", "fontWeight": "600" }],
+                        "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        /* Custom styles for number input arrows removal */
+        input[type=number]::-webkit-inner-spin-button, 
+        input[type=number]::-webkit-outer-spin-button { 
+            -webkit-appearance: none; 
+            margin: 0; 
+        }
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
+        .custom-select {
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23d1c5ae' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 16px;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface-container-lowest text-on-surface antialiased min-h-screen flex items-end md:items-center justify-center font-body-lg">
+<!-- Modal Overlay -->
+<div class="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 transition-opacity"></div>
+<!-- Modal Content (Bottom Sheet) -->
+<main class="relative bg-surface w-full md:max-w-md md:rounded-xl rounded-t-xl z-50 flex flex-col shadow-2xl">
+<!-- Grabber Handle (Mobile only styling approach, but structural for the bottom sheet feel) -->
+<div class="w-full flex justify-center pt-xs pb-sm">
+<div class="w-12 h-1 bg-surface-container-highest rounded-full"></div>
+</div>
+<div class="px-container-margin pb-container-margin flex flex-col gap-sm">
+<!-- Header -->
+<header class="flex justify-between items-center mb-xs">
+<h1 class="font-headline-sm text-headline-sm text-on-surface">Bench Press</h1>
+<button aria-label="Close" class="text-on-surface-variant hover:text-on-surface transition-colors p-1">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">close</span>
+</button>
+</header>
+<!-- Form -->
+<form class="flex flex-col gap-md">
+<!-- Target Sets -->
+<div class="flex flex-col gap-base">
+<label class="font-label-md text-label-md text-on-surface-variant uppercase tracking-widest" for="target_sets">Sets</label>
+<div class="h-[48px] bg-surface-container border border-surface-container-highest rounded flex focus-within:border-primary-container transition-colors">
+<input class="w-full bg-transparent border-none text-center font-data-lg text-data-lg text-on-surface focus:ring-0 px-md outline-none" id="target_sets" inputmode="numeric" type="number" value="4"/>
+</div>
+</div>
+<!-- Rep Range -->
+<div class="flex gap-gutter">
+<div class="flex flex-col gap-base flex-1">
+<label class="font-label-md text-label-md text-on-surface-variant uppercase tracking-widest" for="min_reps">Min Reps</label>
+<div class="h-[48px] bg-surface-container border border-surface-container-highest rounded flex focus-within:border-primary-container transition-colors">
+<input class="w-full bg-transparent border-none text-center font-data-lg text-data-lg text-on-surface focus:ring-0 px-md outline-none" id="min_reps" inputmode="numeric" type="number" value="8"/>
+</div>
+</div>
+<div class="flex flex-col justify-end pb-sm">
+<span class="text-on-surface-variant font-headline-md">—</span>
+</div>
+<div class="flex flex-col gap-base flex-1">
+<label class="font-label-md text-label-md text-on-surface-variant uppercase tracking-widest" for="max_reps">Max Reps</label>
+<div class="h-[48px] bg-surface-container border border-surface-container-highest rounded flex focus-within:border-primary-container transition-colors">
+<input class="w-full bg-transparent border-none text-center font-data-lg text-data-lg text-on-surface focus:ring-0 px-md outline-none" id="max_reps" inputmode="numeric" type="number" value="12"/>
+</div>
+</div>
+</div>
+<!-- Rest Timer -->
+<div class="flex flex-col gap-base">
+<label class="font-label-md text-label-md text-on-surface-variant uppercase tracking-widest" for="rest_seconds">Rest (Sec)</label>
+<div class="h-[48px] bg-surface-container border border-surface-container-highest rounded flex items-center focus-within:border-primary-container transition-colors px-md">
+<span class="material-symbols-outlined text-on-surface-variant mr-xs" style="font-size: 20px;">timer</span>
+<input class="w-full bg-transparent border-none font-data-lg text-data-lg text-on-surface focus:ring-0 outline-none" id="rest_seconds" inputmode="numeric" type="number" value="120"/>
+</div>
+</div>
+<!-- Progression Rule -->
+<div class="flex flex-col gap-base">
+<label class="font-label-md text-label-md text-on-surface-variant uppercase tracking-widest" for="progression">Progression Rule</label>
+<div class="h-[48px] bg-surface-container border border-surface-container-highest rounded focus-within:border-primary-container transition-colors relative">
+<select class="custom-select w-full h-full bg-transparent border-none font-body-lg text-body-lg text-on-surface focus:ring-0 px-md outline-none pr-xl" id="progression">
+<option class="bg-surface text-on-surface" value="none">None</option>
+<option class="bg-surface text-on-surface" selected="" value="double">Double Progression</option>
+<option class="bg-surface text-on-surface" value="linear">Linear Progression</option>
+<option class="bg-surface text-on-surface" value="step">Step Loading</option>
+</select>
+</div>
+</div>
+</form>
+<!-- Actions -->
+<div class="flex gap-sm mt-md">
+<button class="flex-1 h-[48px] rounded border border-outline-variant text-on-surface font-label-md text-label-md uppercase tracking-widest hover:bg-surface-container-high transition-colors active:scale-[0.98]" type="button">
+                    Cancel
+                </button>
+<button class="flex-1 h-[48px] rounded bg-primary-container text-on-primary-container font-label-md text-label-md uppercase tracking-widest hover:bg-primary transition-colors active:scale-[0.98]" type="button">
+                    Save
+                </button>
+</div>
+</div>
+</main>
+</body></html>

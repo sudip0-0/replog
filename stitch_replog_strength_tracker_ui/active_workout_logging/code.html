@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>RepLog - Active Workout</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary": "#2d3038",
+                        "error-container": "#93000a",
+                        "secondary": "#c4c6d0",
+                        "secondary-fixed": "#e0e2ec",
+                        "on-secondary-fixed": "#191c23",
+                        "on-error": "#690005",
+                        "secondary-container": "#44474f",
+                        "on-secondary-container": "#b3b5be",
+                        "on-primary": "#3e2e00",
+                        "on-primary-fixed-variant": "#594400",
+                        "on-background": "#e3e2e6",
+                        "surface-bright": "#38393c",
+                        "primary-fixed": "#ffdf95",
+                        "tertiary-fixed": "#b8eaff",
+                        "surface-variant": "#343538",
+                        "on-secondary-fixed-variant": "#44474f",
+                        "error": "#ffb4ab",
+                        "inverse-surface": "#e3e2e6",
+                        "surface": "#121316",
+                        "outline-variant": "#4e4634",
+                        "tertiary-fixed-dim": "#63d4fa",
+                        "primary": "#ffe5aa",
+                        "surface-container-lowest": "#0d0e11",
+                        "surface-container-low": "#1b1b1f",
+                        "on-surface": "#e3e2e6",
+                        "on-tertiary-fixed-variant": "#004d61",
+                        "on-primary-fixed": "#251a00",
+                        "on-tertiary-container": "#005e74",
+                        "surface-tint": "#f0c03e",
+                        "on-tertiary": "#003544",
+                        "tertiary-container": "#69d9ff",
+                        "primary-container": "#f5c542",
+                        "secondary-fixed-dim": "#c4c6d0",
+                        "on-primary-container": "#6b5200",
+                        "surface-container-high": "#292a2d",
+                        "inverse-on-surface": "#303034",
+                        "primary-fixed-dim": "#f0c03e",
+                        "inverse-primary": "#765a00",
+                        "surface-container": "#1f1f23",
+                        "background": "#121316",
+                        "outline": "#9a907b",
+                        "surface-container-highest": "#343538",
+                        "on-error-container": "#ffdad6",
+                        "on-surface-variant": "#d1c5ae",
+                        "tertiary": "#c5eeff",
+                        "surface-dim": "#121316",
+                        "on-tertiary-fixed": "#001f28"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "base": "4px",
+                        "lg": "24px",
+                        "xs": "8px",
+                        "container-margin": "16px",
+                        "xl": "32px",
+                        "md": "16px",
+                        "sm": "12px",
+                        "gutter": "12px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "body-md": ["Inter"],
+                        "data-lg": ["Inter"],
+                        "headline-sm": ["Inter"],
+                        "label-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "display-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "data-lg": ["20px", { "lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "headline-sm": ["18px", { "lineHeight": "24px", "fontWeight": "600" }],
+                        "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #090A0D;
+            color: #e3e2e6;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        /* Hide scrollbar for cleaner look but keep functionality */
+        ::-webkit-scrollbar {
+            width: 0px;
+            background: transparent;
+        }
+        
+        /* Custom input styles for performance UI */
+        .perf-input {
+            appearance: none;
+            -webkit-appearance: none;
+        }
+        .perf-input::-webkit-outer-spin-button,
+        .perf-input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="flex flex-col min-h-screen font-body-lg text-body-lg overflow-x-hidden">
+<!-- TopAppBar Semantic Shell - Intent: Linear/Transactional (Active Workout) -> We keep it but modify for workflow context -->
+<header class="bg-surface dark:bg-surface border-b border-outline-variant dark:border-outline-variant docked full-width top-0 sticky z-40">
+<div class="flex justify-between items-center h-14 w-full px-md">
+<button class="text-primary dark:text-primary hover:bg-surface-container-highest dark:hover:bg-surface-container-highest transition-colors active:opacity-70 transition-opacity p-2 -ml-2 rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
+</button>
+<div class="flex flex-col items-center">
+<h1 class="font-headline-sm text-headline-sm text-primary dark:text-primary">Pull Day A</h1>
+<span class="font-label-md text-label-md text-primary-container tabular-nums tracking-wider mt-0.5">24:15</span>
+</div>
+<button class="text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-highest dark:hover:bg-surface-container-highest transition-colors active:opacity-70 transition-opacity p-2 -mr-2 rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+</button>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-1 px-container-margin py-md flex flex-col gap-sm pb-32">
+<!-- Exercise Card 1: Bench Press -->
+<article class="bg-[#181B22] border border-[#252A33] rounded-xl overflow-hidden flex flex-col">
+<!-- Header -->
+<div class="px-md py-sm border-b border-[#252A33] flex justify-between items-start">
+<div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Bench Press</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">Pinky on rings</p>
+</div>
+<button class="text-on-surface-variant p-1 rounded-DEFAULT hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined" data-icon="more_horiz">more_horiz</span>
+</button>
+</div>
+<!-- Sets Area -->
+<div class="flex flex-col">
+<!-- Column Headers -->
+<div class="grid grid-cols-[32px_1fr_1fr_1fr_44px] gap-2 px-md py-xs font-label-md text-label-md text-on-surface-variant text-center items-center">
+<div>Set</div>
+<div>Prev</div>
+<div>kg</div>
+<div>Reps</div>
+<div class="flex justify-center"><span class="material-symbols-outlined text-[16px]" data-icon="check">check</span></div>
+</div>
+<!-- Set 1 (Completed) -->
+<div class="grid grid-cols-[32px_1fr_1fr_1fr_44px] gap-2 px-md py-1 items-center bg-[#181B22]">
+<div class="flex justify-center">
+<span class="font-label-md text-label-md text-on-surface-variant">1</span>
+</div>
+<div class="text-center font-body-md text-body-md text-on-surface-variant">80 x 8</div>
+<div class="h-12 bg-surface rounded-lg border border-[#252A33] flex items-center justify-center">
+<input class="perf-input bg-transparent w-full text-center font-data-lg text-data-lg text-on-surface focus:outline-none focus:border-primary-container border-transparent rounded-lg" type="number" value="80"/>
+</div>
+<div class="h-12 bg-surface rounded-lg border border-[#252A33] flex items-center justify-center">
+<input class="perf-input bg-transparent w-full text-center font-data-lg text-data-lg text-on-surface focus:outline-none focus:border-primary-container border-transparent rounded-lg" type="number" value="8"/>
+</div>
+<button class="h-12 w-full rounded-lg bg-primary-container/20 border border-primary-container flex flex-col items-center justify-center text-primary-container active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-[20px]" data-icon="check">check</span>
+</button>
+</div>
+<!-- Set 2 (Completed) -->
+<div class="grid grid-cols-[32px_1fr_1fr_1fr_44px] gap-2 px-md py-1 items-center bg-[#181B22]">
+<div class="flex justify-center">
+<span class="font-label-md text-label-md text-on-surface-variant">2</span>
+</div>
+<div class="text-center font-body-md text-body-md text-on-surface-variant">80 x 8</div>
+<div class="h-12 bg-surface rounded-lg border border-[#252A33] flex items-center justify-center">
+<input class="perf-input bg-transparent w-full text-center font-data-lg text-data-lg text-on-surface focus:outline-none focus:border-primary-container border-transparent rounded-lg" type="number" value="80"/>
+</div>
+<div class="h-12 bg-surface rounded-lg border border-[#252A33] flex items-center justify-center">
+<input class="perf-input bg-transparent w-full text-center font-data-lg text-data-lg text-on-surface focus:outline-none focus:border-primary-container border-transparent rounded-lg" type="number" value="8"/>
+</div>
+<button class="h-12 w-full rounded-lg bg-primary-container/20 border border-primary-container flex flex-col items-center justify-center text-primary-container active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-[20px]" data-icon="check">check</span>
+</button>
+</div>
+<!-- Set 3 (Active/Expanded) -->
+<div class="bg-surface-container-high border-y border-[#252A33]">
+<div class="grid grid-cols-[32px_1fr_1fr_1fr_44px] gap-2 px-md py-2 items-center">
+<div class="flex justify-center">
+<span class="font-label-md text-label-md text-primary-container bg-primary-container/10 px-1.5 py-0.5 rounded-DEFAULT">3</span>
+</div>
+<div class="text-center font-body-md text-body-md text-on-surface-variant">80 x 7</div>
+<div class="h-12 bg-surface rounded-lg border border-primary-container flex items-center justify-center">
+<input class="perf-input bg-transparent w-full text-center font-data-lg text-data-lg text-on-surface focus:outline-none" type="number" value="80"/>
+</div>
+<div class="h-12 bg-surface rounded-lg border border-primary-container flex items-center justify-center">
+<input class="perf-input bg-transparent w-full text-center font-data-lg text-data-lg text-on-surface focus:outline-none" type="number" value="7"/>
+</div>
+<button class="h-12 w-full rounded-lg bg-primary-container flex flex-col items-center justify-center text-on-primary-container active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-[20px]" data-icon="check" style="font-variation-settings: 'FILL' 1;">check</span>
+</button>
+</div>
+<!-- Expanded Details -->
+<div class="px-md pb-sm pt-xs flex flex-col gap-xs">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-xs">
+<span class="font-label-md text-label-md text-on-surface-variant">RPE</span>
+<div class="flex gap-1">
+<button class="w-8 h-8 rounded-DEFAULT bg-surface border border-[#252A33] text-on-surface-variant font-label-md flex items-center justify-center">8</button>
+<button class="w-8 h-8 rounded-DEFAULT bg-[#252A33] border border-primary-container text-primary font-label-md flex items-center justify-center">9</button>
+<button class="w-8 h-8 rounded-DEFAULT bg-surface border border-[#252A33] text-on-surface-variant font-label-md flex items-center justify-center">10</button>
+</div>
+</div>
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant" data-icon="calculate">calculate</span>
+<span class="font-label-md text-label-md text-secondary">20 + 10 + 5</span>
+</div>
+</div>
+</div>
+</div>
+<div class="px-md py-sm">
+<button class="w-full py-2 flex items-center justify-center gap-2 text-primary dark:text-primary font-label-md text-label-md rounded-lg hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-[18px]" data-icon="add">add</span>
+                        Add Set
+                    </button>
+</div>
+</div>
+</article>
+<!-- Exercise Card 2: Lat Pulldown -->
+<article class="bg-[#181B22] border border-[#252A33] rounded-xl overflow-hidden flex flex-col opacity-80">
+<div class="px-md py-sm border-b border-[#252A33] flex justify-between items-start">
+<div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Lat Pulldown</h2>
+</div>
+<button class="text-on-surface-variant p-1 rounded-DEFAULT hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined" data-icon="more_horiz">more_horiz</span>
+</button>
+</div>
+<div class="flex flex-col">
+<div class="grid grid-cols-[32px_1fr_1fr_1fr_44px] gap-2 px-md py-xs font-label-md text-label-md text-on-surface-variant text-center items-center">
+<div>Set</div>
+<div>Prev</div>
+<div>kg</div>
+<div>Reps</div>
+<div class="flex justify-center"><span class="material-symbols-outlined text-[16px]" data-icon="check">check</span></div>
+</div>
+<div class="grid grid-cols-[32px_1fr_1fr_1fr_44px] gap-2 px-md py-1 items-center bg-[#181B22]">
+<div class="flex justify-center">
+<span class="font-label-md text-label-md text-on-surface-variant">1</span>
+</div>
+<div class="text-center font-body-md text-body-md text-on-surface-variant">60 x 10</div>
+<div class="h-12 bg-surface rounded-lg border border-[#252A33] flex items-center justify-center">
+<input class="perf-input bg-transparent w-full text-center font-data-lg text-data-lg text-on-surface-variant focus:outline-none focus:border-primary-container border-transparent rounded-lg" placeholder="-" type="number"/>
+</div>
+<div class="h-12 bg-surface rounded-lg border border-[#252A33] flex items-center justify-center">
+<input class="perf-input bg-transparent w-full text-center font-data-lg text-data-lg text-on-surface-variant focus:outline-none focus:border-primary-container border-transparent rounded-lg" placeholder="-" type="number"/>
+</div>
+<button class="h-12 w-full rounded-lg bg-surface border border-[#252A33] flex flex-col items-center justify-center text-on-surface-variant active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-[20px]" data-icon="check">check</span>
+</button>
+</div>
+<div class="px-md py-sm">
+<button class="w-full py-2 flex items-center justify-center gap-2 text-on-surface-variant font-label-md text-label-md rounded-lg hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-[18px]" data-icon="add">add</span>
+                        Add Set
+                    </button>
+</div>
+</div>
+</article>
+<!-- Exercise Card 3: RDL -->
+<article class="bg-[#181B22] border border-[#252A33] rounded-xl overflow-hidden flex flex-col opacity-80">
+<div class="px-md py-sm border-b border-[#252A33] flex justify-between items-start">
+<div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Romanian Deadlift</h2>
+</div>
+<button class="text-on-surface-variant p-1 rounded-DEFAULT hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined" data-icon="more_horiz">more_horiz</span>
+</button>
+</div>
+<div class="px-md py-lg flex justify-center">
+<p class="font-body-md text-body-md text-on-surface-variant italic">No previous history</p>
+</div>
+<div class="px-md py-sm border-t border-[#252A33]">
+<button class="w-full py-2 flex items-center justify-center gap-2 text-on-surface-variant font-label-md text-label-md rounded-lg hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-[18px]" data-icon="add">add</span>
+                    Add Set
+                </button>
+</div>
+</article>
+</main>
+<!-- Bottom Action Area (Fixed for workout context) -->
+<div class="fixed bottom-0 left-0 w-full bg-[#121419]/90 backdrop-blur-md border-t border-[#252A33] px-container-margin py-md flex flex-col gap-sm z-50">
+<button class="w-full h-12 bg-surface-container-highest text-on-surface font-headline-sm text-headline-sm rounded-lg flex items-center justify-center gap-2 active:scale-95 transition-transform">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+            Add Exercise
+        </button>
+<button class="w-full h-14 bg-primary-container text-on-primary-container font-headline-sm text-headline-sm rounded-lg flex items-center justify-center active:scale-95 transition-transform shadow-[0_0_15px_rgba(245,197,66,0.2)]">
+            Finish Workout
+        </button>
+</div>
+</body></html>

@@ -1,9 +1,11 @@
-import { ScrollView } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { ActivityIndicator, Button, Text } from 'react-native-paper';
 import { router, useLocalSearchParams } from 'expo-router';
+import { ScreenContainer } from '@/components/ScreenContainer';
 import { useRoutineDetail, useReorderRoutine } from '@/features/routines/useRoutines';
 import { RoutineExerciseRow } from '@/features/routines/RoutineExerciseRow';
 import { useStartFlow } from '@/features/workouts/useStartFlow';
+import { replogColors } from '@/theme';
 
 export default function RoutineScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -12,7 +14,7 @@ export default function RoutineScreen() {
   const { start } = useStartFlow();
 
   if (isLoading) return <ActivityIndicator style={{ marginTop: 32 }} />;
-  if (!data) return <Text style={{ margin: 16 }}>Routine not found.</Text>;
+  if (!data) return <Text style={styles.notFound}>Routine not found.</Text>;
 
   const ids = data.exercises.map((e) => e.routineExercise.id);
   const move = (index: number, dir: -1 | 1) => {
@@ -24,11 +26,13 @@ export default function RoutineScreen() {
   };
 
   return (
-    <ScrollView contentContainerStyle={{ padding: 16, gap: 8, paddingBottom: 48 }}>
-      <Text variant="headlineSmall">{data.routine.name}</Text>
+    <ScreenContainer>
+      <Text variant="headlineSmall" style={styles.title}>
+        {data.routine.name}
+      </Text>
 
       {data.exercises.length === 0 ? (
-        <Text variant="bodyMedium" style={{ marginVertical: 8 }}>
+        <Text variant="bodyMedium" style={styles.muted}>
           No exercises yet. Add one below.
         </Text>
       ) : (
@@ -45,6 +49,7 @@ export default function RoutineScreen() {
       )}
 
       <Button
+        mode="outlined"
         icon="plus"
         onPress={() => router.push({ pathname: '/add-exercise', params: { routineId: id } })}
         accessibilityLabel="Add exercise to routine"
@@ -59,6 +64,12 @@ export default function RoutineScreen() {
       >
         Start workout
       </Button>
-    </ScrollView>
+    </ScreenContainer>
   );
 }
+
+const styles = StyleSheet.create({
+  notFound: { color: replogColors.text, margin: 16 },
+  title: { color: replogColors.text, fontWeight: '700' },
+  muted: { color: replogColors.textMuted, marginVertical: 8 },
+});

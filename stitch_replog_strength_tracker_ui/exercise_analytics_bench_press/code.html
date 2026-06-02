@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>RepLog - Bench Press Analytics</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-secondary": "#2d3038",
+                      "error-container": "#93000a",
+                      "secondary": "#c4c6d0",
+                      "secondary-fixed": "#e0e2ec",
+                      "on-secondary-fixed": "#191c23",
+                      "on-error": "#690005",
+                      "secondary-container": "#44474f",
+                      "on-secondary-container": "#b3b5be",
+                      "on-primary": "#3e2e00",
+                      "on-primary-fixed-variant": "#594400",
+                      "on-background": "#e3e2e6",
+                      "surface-bright": "#38393c",
+                      "primary-fixed": "#ffdf95",
+                      "tertiary-fixed": "#b8eaff",
+                      "surface-variant": "#343538",
+                      "on-secondary-fixed-variant": "#44474f",
+                      "error": "#ffb4ab",
+                      "inverse-surface": "#e3e2e6",
+                      "surface": "#121316",
+                      "outline-variant": "#4e4634",
+                      "tertiary-fixed-dim": "#63d4fa",
+                      "primary": "#ffe5aa",
+                      "surface-container-lowest": "#0d0e11",
+                      "surface-container-low": "#1b1b1f",
+                      "on-surface": "#e3e2e6",
+                      "on-tertiary-fixed-variant": "#004d61",
+                      "on-primary-fixed": "#251a00",
+                      "on-tertiary-container": "#005e74",
+                      "surface-tint": "#f0c03e",
+                      "on-tertiary": "#003544",
+                      "tertiary-container": "#69d9ff",
+                      "primary-container": "#f5c542",
+                      "secondary-fixed-dim": "#c4c6d0",
+                      "on-primary-container": "#6b5200",
+                      "surface-container-high": "#292a2d",
+                      "inverse-on-surface": "#303034",
+                      "primary-fixed-dim": "#f0c03e",
+                      "inverse-primary": "#765a00",
+                      "surface-container": "#1f1f23",
+                      "background": "#121316",
+                      "outline": "#9a907b",
+                      "surface-container-highest": "#343538",
+                      "on-error-container": "#ffdad6",
+                      "on-surface-variant": "#d1c5ae",
+                      "tertiary": "#c5eeff",
+                      "surface-dim": "#121316",
+                      "on-tertiary-fixed": "#001f28"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "base": "4px",
+                      "lg": "24px",
+                      "xs": "8px",
+                      "container-margin": "16px",
+                      "xl": "32px",
+                      "md": "16px",
+                      "sm": "12px",
+                      "gutter": "12px"
+              },
+              "fontFamily": {
+                      "body-lg": [
+                              "Inter"
+                      ],
+                      "display-lg": [
+                              "Inter"
+                      ],
+                      "headline-md": [
+                              "Inter"
+                      ],
+                      "body-md": [
+                              "Inter"
+                      ],
+                      "data-lg": [
+                              "Inter"
+                      ],
+                      "headline-sm": [
+                              "Inter"
+                      ],
+                      "label-md": [
+                              "Inter"
+                      ]
+              },
+              "fontSize": {
+                      "body-lg": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "display-lg": [
+                              "32px",
+                              {
+                                      "lineHeight": "40px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "headline-md": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-md": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "data-lg": [
+                              "20px",
+                              {
+                                      "lineHeight": "24px",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "headline-sm": [
+                              "18px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "label-md": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "600"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+<style>
+        body {
+            background-color: theme('colors.background');
+            color: theme('colors.on-background');
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="antialiased min-h-screen flex flex-col">
+<!-- TopAppBar -->
+<header class="flex justify-between items-center h-14 w-full px-md bg-surface dark:bg-surface border-b border-outline-variant dark:border-outline-variant docked full-width top-0 sticky z-40">
+<div class="flex items-center gap-sm">
+<button class="text-primary dark:text-primary active:opacity-70 transition-opacity p-2 -ml-2 rounded-full hover:bg-surface-container-highest dark:hover:bg-surface-container-highest transition-colors">
+<span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
+</button>
+<h1 class="font-headline-sm text-headline-sm text-primary dark:text-primary">Bench Press</h1>
+</div>
+<button class="text-primary dark:text-primary active:opacity-70 transition-opacity p-2 -mr-2 rounded-full hover:bg-surface-container-highest dark:hover:bg-surface-container-highest transition-colors">
+<span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+</button>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-grow flex flex-col px-container-margin py-md gap-lg pb-32">
+<!-- Progression Suggestion Card -->
+<section class="bg-surface-container rounded-lg p-md border border-surface-container-highest">
+<div class="flex items-start gap-sm">
+<div class="p-xs bg-primary/10 rounded-full shrink-0">
+<span class="material-symbols-outlined text-primary" data-icon="trending_up">trending_up</span>
+</div>
+<div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface mb-xs">Progression Suggestion</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Hit all target reps. Add 2.5kg next time.</p>
+</div>
+</div>
+</section>
+<!-- Key Metrics Grid -->
+<section class="grid grid-cols-3 gap-sm">
+<div class="bg-surface-container rounded-lg p-sm border border-surface-container-highest flex flex-col items-center justify-center text-center">
+<span class="font-label-md text-label-md text-on-surface-variant mb-base uppercase">Best</span>
+<span class="font-data-lg text-data-lg text-primary">100<span class="text-body-md text-on-surface-variant ml-1">kg</span></span>
+</div>
+<div class="bg-surface-container rounded-lg p-sm border border-surface-container-highest flex flex-col items-center justify-center text-center">
+<span class="font-label-md text-label-md text-on-surface-variant mb-base uppercase">Est. 1RM</span>
+<span class="font-data-lg text-data-lg text-primary">115<span class="text-body-md text-on-surface-variant ml-1">kg</span></span>
+</div>
+<div class="bg-surface-container rounded-lg p-sm border border-surface-container-highest flex flex-col items-center justify-center text-center">
+<span class="font-label-md text-label-md text-on-surface-variant mb-base uppercase">Volume</span>
+<span class="font-data-lg text-data-lg text-primary">3.2<span class="text-body-md text-on-surface-variant ml-1">t</span></span>
+</div>
+</section>
+<!-- PR Badges -->
+<section class="flex gap-sm overflow-x-auto pb-2 -mx-container-margin px-container-margin no-scrollbar">
+<div class="flex-shrink-0 bg-surface-container-highest border border-outline-variant rounded-full px-sm py-xs flex items-center gap-xs">
+<span class="material-symbols-outlined text-primary-container text-sm" data-icon="emoji_events" style="font-variation-settings: 'FILL' 1;">emoji_events</span>
+<span class="font-label-md text-label-md text-on-surface">1RM PR: 105kg</span>
+</div>
+<div class="flex-shrink-0 bg-surface-container-highest border border-outline-variant rounded-full px-sm py-xs flex items-center gap-xs">
+<span class="material-symbols-outlined text-primary-container text-sm" data-icon="emoji_events" style="font-variation-settings: 'FILL' 1;">emoji_events</span>
+<span class="font-label-md text-label-md text-on-surface">Rep PR: 15 (80kg)</span>
+</div>
+</section>
+<!-- Charts Section (Sparklines) -->
+<section class="flex flex-col gap-sm">
+<!-- Est 1RM Trend -->
+<div class="bg-surface-container rounded-lg p-md border border-surface-container-highest">
+<div class="flex justify-between items-center mb-md">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Est. 1RM Trend</h3>
+<span class="font-body-md text-body-md text-primary">+5% (30d)</span>
+</div>
+<!-- CSS representation of a sparkline for simplicity without JS libraries -->
+<div class="h-24 w-full relative flex items-end justify-between px-2 pt-4">
+<!-- Grid lines -->
+<div class="absolute inset-0 border-b border-surface-container-highest top-[33%] border-dashed"></div>
+<div class="absolute inset-0 border-b border-surface-container-highest top-[66%] border-dashed"></div>
+<!-- SVG Path for trend -->
+<svg class="absolute inset-0 h-full w-full" preserveaspectratio="none" viewbox="0 0 100 100">
+<!-- Gradient fill -->
+<lineargradient id="chart-grad1" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#f5c542" stop-opacity="0.3"></stop>
+<stop offset="100%" stop-color="#f5c542" stop-opacity="0"></stop>
+</lineargradient>
+<path d="M0,80 L20,75 L40,85 L60,50 L80,30 L100,20 L100,100 L0,100 Z" fill="url(#chart-grad1)"></path>
+<!-- Stroke -->
+<path d="M0,80 L20,75 L40,85 L60,50 L80,30 L100,20" fill="none" stroke="#f5c542" stroke-width="2" vector-effect="non-scaling-stroke"></path>
+<!-- Data points -->
+<circle cx="100" cy="20" fill="#121316" r="4" stroke="#f5c542" stroke-width="2"></circle>
+</svg>
+</div>
+</div>
+<!-- Volume Trend -->
+<div class="bg-surface-container rounded-lg p-md border border-surface-container-highest">
+<div class="flex justify-between items-center mb-md">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Volume Trend</h3>
+<span class="font-body-md text-body-md text-on-surface-variant">Last 6 Sessions</span>
+</div>
+<!-- Bar Chart Representation -->
+<div class="h-24 w-full flex items-end justify-between gap-2">
+<div class="w-full bg-surface-container-highest rounded-t-sm h-[40%] hover:bg-surface-container-lowest transition-colors relative group">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-inverse-surface text-inverse-on-surface text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10">2.1t</div>
+</div>
+<div class="w-full bg-surface-container-highest rounded-t-sm h-[55%] hover:bg-surface-container-lowest transition-colors relative group">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-inverse-surface text-inverse-on-surface text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10">2.4t</div>
+</div>
+<div class="w-full bg-surface-container-highest rounded-t-sm h-[45%] hover:bg-surface-container-lowest transition-colors relative group">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-inverse-surface text-inverse-on-surface text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10">2.2t</div>
+</div>
+<div class="w-full bg-surface-container-highest rounded-t-sm h-[70%] hover:bg-surface-container-lowest transition-colors relative group">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-inverse-surface text-inverse-on-surface text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10">2.8t</div>
+</div>
+<div class="w-full bg-surface-container-highest rounded-t-sm h-[60%] hover:bg-surface-container-lowest transition-colors relative group">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-inverse-surface text-inverse-on-surface text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10">2.6t</div>
+</div>
+<div class="w-full bg-primary rounded-t-sm h-[90%] relative group">
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-inverse-surface text-inverse-on-surface text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10">3.2t</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar (Suppressed intentionally as per rules: This is a detail/analytics sub-page accessed via a back button from History/Routines. It is a focused journey, not a top-level destination.) -->
+</body></html>

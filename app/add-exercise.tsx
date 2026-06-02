@@ -3,6 +3,7 @@ import { router, useLocalSearchParams } from 'expo-router';
 import { ExercisePicker } from '@/features/exercises/ExercisePicker';
 import { useAddExercise } from '@/features/workouts/useWorkout';
 import { useAddExerciseToRoutine } from '@/features/routines/useRoutines';
+import { replogColors } from '@/theme';
 
 export default function AddExerciseScreen() {
   const { workoutId, routineId } = useLocalSearchParams<{
@@ -13,7 +14,7 @@ export default function AddExerciseScreen() {
   const addToRoutine = useAddExerciseToRoutine(routineId ?? '');
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, backgroundColor: replogColors.base }}>
       <ExercisePicker
         onSelect={(exercise) => {
           const mutation = routineId ? addToRoutine : addToWorkout;

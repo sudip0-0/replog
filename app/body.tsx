@@ -1,9 +1,12 @@
 import { useState } from 'react';
-import { ScrollView, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { Button, IconButton, List, Text, TextInput } from 'react-native-paper';
+import { ScreenContainer } from '@/components/ScreenContainer';
 import { useAddBodyMetric, useBodyMetrics, useRemoveBodyMetric } from '@/features/body/useBody';
 import { fromKg, toKg } from '@/domain/units';
 import { useUIStore } from '@/store/uiStore';
+import { replogColors } from '@/theme';
+import { ui } from '@/theme/styles';
 
 export default function BodyScreen() {
   const unit = useUIStore((s) => s.unit);
@@ -22,55 +25,80 @@ export default function BodyScreen() {
         weight_kg: toKg(w, unit),
         body_fat_pct: fat ? Number(fat) : null,
       },
-      { onSuccess: () => { setWeight(''); setFat(''); } },
+      {
+        onSuccess: () => {
+          setWeight('');
+          setFat('');
+        },
+      },
     );
   };
 
   return (
-    <ScrollView contentContainerStyle={{ padding: 16, gap: 12, paddingBottom: 48 }}>
-      <Text variant="headlineSmall">Body metrics</Text>
-      <View style={{ flexDirection: 'row', gap: 8 }}>
-        <TextInput
-          dense
-          style={{ flex: 1 }}
-          label={`Weight (${unit})`}
-          keyboardType="numeric"
-          value={weight}
-          onChangeText={setWeight}
-          accessibilityLabel={`Body weight in ${unit}`}
-        />
-        <TextInput
-          dense
-          style={{ flex: 1 }}
-          label="Body fat % (optional)"
-          keyboardType="numeric"
-          value={fat}
-          onChangeText={setFat}
-          accessibilityLabel="Body fat percentage"
-        />
+    <ScreenContainer>
+      <Text variant="headlineSmall" style={styles.title}>
+        Body metrics
+      </Text>
+      <View style={[ui.card, styles.form]}>
+        <View style={styles.inputRow}>
+          <TextInput
+            dense
+            style={styles.input}
+            label={`Weight (${unit})`}
+            keyboardType="numeric"
+            value={weight}
+            onChangeText={setWeight}
+            accessibilityLabel={`Body weight in ${unit}`}
+          />
+          <TextInput
+            dense
+            style={styles.input}
+            label="Body fat %"
+            keyboardType="numeric"
+            value={fat}
+            onChangeText={setFat}
+            accessibilityLabel="Body fat percentage"
+          />
+        </View>
+        <Button mode="contained" icon="plus" onPress={onAdd} accessibilityLabel="Log body weight">
+          Log today
+        </Button>
       </View>
-      <Button mode="contained" icon="plus" onPress={onAdd} accessibilityLabel="Log body weight">
-        Log today
-      </Button>
 
       {!data || data.length === 0 ? (
-        <Text variant="bodyMedium">No entries yet.</Text>
+        <Text variant="bodyMedium" style={styles.muted}>
+          No entries yet.
+        </Text>
       ) : (
         data.map((m) => (
           <List.Item
             key={m.id}
-            title={`${Math.round(fromKg(m.weight_kg, unit) * 10) / 10} ${unit}${m.body_fat_pct != null ? ` · ${m.body_fat_pct}%` : ''}`}
+            title={`${Math.round(fromKg(m.weight_kg, unit) * 10) / 10} ${unit}${m.body_fat_pct != null ? ` / ${m.body_fat_pct}%` : ''}`}
             description={m.date}
             right={() => (
-              <IconButton
-                icon="delete-outline"
-                onPress={() => remove.mutate(m.id)}
-                accessibilityLabel={`Delete entry from ${m.date}`}
-              />
+              <IconButton icon="delete-outline" onPress={() => remove.mutate(m.id)} accessibilityLabel={`Delete entry from ${m.date}`} />
             )}
+            style={styles.row}
+            titleStyle={styles.rowTitle}
+            descriptionStyle={styles.muted}
           />
         ))
       )}
-    </ScrollView>
+    </ScreenContainer>
   );
 }
+
+const styles = StyleSheet.create({
+  title: { color: replogColors.text, fontWeight: '700' },
+  form: { gap: 10, padding: 12 },
+  inputRow: { flexDirection: 'row', gap: 8 },
+  input: { flex: 1 },
+  muted: { color: replogColors.textMuted },
+  row: {
+    backgroundColor: replogColors.surfaceLow,
+    borderColor: replogColors.outline,
+    borderRadius: 8,
+    borderWidth: 1,
+  },
+  rowTitle: { color: replogColors.text, fontWeight: '700' },
+});

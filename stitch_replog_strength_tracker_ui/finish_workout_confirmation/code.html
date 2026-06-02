@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>RepLog - Finish Workout</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-secondary": "#2d3038",
+                    "error-container": "#93000a",
+                    "secondary": "#c4c6d0",
+                    "secondary-fixed": "#e0e2ec",
+                    "on-secondary-fixed": "#191c23",
+                    "on-error": "#690005",
+                    "secondary-container": "#44474f",
+                    "on-secondary-container": "#b3b5be",
+                    "on-primary": "#3e2e00",
+                    "on-primary-fixed-variant": "#594400",
+                    "on-background": "#e3e2e6",
+                    "surface-bright": "#38393c",
+                    "primary-fixed": "#ffdf95",
+                    "tertiary-fixed": "#b8eaff",
+                    "surface-variant": "#343538",
+                    "on-secondary-fixed-variant": "#44474f",
+                    "error": "#ffb4ab",
+                    "inverse-surface": "#e3e2e6",
+                    "surface": "#121316",
+                    "outline-variant": "#4e4634",
+                    "tertiary-fixed-dim": "#63d4fa",
+                    "primary": "#ffe5aa",
+                    "surface-container-lowest": "#0d0e11",
+                    "surface-container-low": "#1b1b1f",
+                    "on-surface": "#e3e2e6",
+                    "on-tertiary-fixed-variant": "#004d61",
+                    "on-primary-fixed": "#251a00",
+                    "on-tertiary-container": "#005e74",
+                    "surface-tint": "#f0c03e",
+                    "on-tertiary": "#003544",
+                    "tertiary-container": "#69d9ff",
+                    "primary-container": "#f5c542",
+                    "secondary-fixed-dim": "#c4c6d0",
+                    "on-primary-container": "#6b5200",
+                    "surface-container-high": "#292a2d",
+                    "inverse-on-surface": "#303034",
+                    "primary-fixed-dim": "#f0c03e",
+                    "inverse-primary": "#765a00",
+                    "surface-container": "#1f1f23",
+                    "background": "#121316",
+                    "outline": "#9a907b",
+                    "surface-container-highest": "#343538",
+                    "on-error-container": "#ffdad6",
+                    "on-surface-variant": "#d1c5ae",
+                    "tertiary": "#c5eeff",
+                    "surface-dim": "#121316",
+                    "on-tertiary-fixed": "#001f28"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "base": "4px",
+                    "lg": "24px",
+                    "xs": "8px",
+                    "container-margin": "16px",
+                    "xl": "32px",
+                    "md": "16px",
+                    "sm": "12px",
+                    "gutter": "12px"
+            },
+            "fontFamily": {
+                    "body-lg": ["Inter", "sans-serif"],
+                    "display-lg": ["Inter", "sans-serif"],
+                    "headline-md": ["Inter", "sans-serif"],
+                    "body-md": ["Inter", "sans-serif"],
+                    "data-lg": ["Inter", "sans-serif"],
+                    "headline-sm": ["Inter", "sans-serif"],
+                    "label-md": ["Inter", "sans-serif"]
+            },
+            "fontSize": {
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "data-lg": ["20px", {"lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "headline-sm": ["18px", {"lineHeight": "24px", "fontWeight": "600"}],
+                    "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #090A0D; /* Base Level App Background */
+            color: #e3e2e6; /* on-surface */
+        }
+        
+        /* Utility for 4px baseline grid rhythm */
+        .baseline-rhythm > * + * {
+            margin-top: 4px;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="antialiased min-h-screen relative overflow-hidden">
+<!-- Simulated Underlying Screen (Active Workout) - Dimmed visually by the overlay -->
+<div class="h-screen w-full flex flex-col bg-background opacity-40 pointer-events-none select-none blur-[2px]">
+<!-- TopAppBar (Simulated) -->
+<header class="flex justify-between items-center h-14 w-full px-md border-b border-outline-variant bg-surface">
+<span class="material-symbols-outlined text-on-surface-variant">keyboard_arrow_down</span>
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-error animate-pulse"></span>
+<span class="font-headline-sm text-headline-sm text-primary">52:00</span>
+</div>
+<button class="font-headline-sm text-headline-sm text-primary-container">Finish</button>
+</header>
+<!-- Dummy Content Payload -->
+<main class="flex-1 p-container-margin flex flex-col gap-sm overflow-hidden">
+<!-- Dummy Exercise Card 1 -->
+<div class="bg-surface rounded-lg border border-surface-variant p-md flex flex-col gap-sm">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Barbell Squat</h3>
+<div class="flex items-center justify-between text-on-surface-variant font-label-md text-label-md">
+<span class="w-8">SET</span>
+<span class="flex-1 text-center">PREVIOUS</span>
+<span class="w-16 text-center">KG</span>
+<span class="w-16 text-center">REPS</span>
+<span class="w-8"></span>
+</div>
+<div class="flex items-center justify-between bg-surface-container-low rounded-DEFAULT p-xs">
+<span class="w-8 font-body-md text-body-md text-center">1</span>
+<span class="flex-1 text-center font-body-md text-body-md text-on-surface-variant">100 x 8</span>
+<div class="w-16 h-12 bg-surface border border-outline-variant rounded-DEFAULT flex items-center justify-center font-data-lg text-data-lg">100</div>
+<div class="w-16 h-12 bg-surface border border-outline-variant rounded-DEFAULT flex items-center justify-center font-data-lg text-data-lg">8</div>
+<div class="w-8 h-8 rounded-DEFAULT bg-primary-container text-on-primary-container flex items-center justify-center">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+</div>
+</div>
+<!-- Dummy Exercise Card 2 -->
+<div class="bg-surface rounded-lg border border-surface-variant p-md flex flex-col gap-sm opacity-50">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Leg Press</h3>
+<div class="h-12 bg-surface-container-low rounded-DEFAULT"></div>
+</div>
+</main>
+</div>
+<!-- Modal Overlay -->
+<div class="fixed inset-0 z-40 bg-black/60 backdrop-blur-[1px] transition-opacity duration-300"></div>
+<!-- Finish Workout Bottom Sheet Modal -->
+<div class="fixed inset-x-0 bottom-0 z-50 flex flex-col items-center">
+<!-- Sheet Container -->
+<div class="w-full max-w-[600px] bg-surface rounded-t-xl flex flex-col px-md pb-lg pt-xs shadow-2xl animate-[slideUp_0.3s_ease-out]">
+<!-- Grabber Handle -->
+<div class="w-12 h-1 bg-surface-variant rounded-full mx-auto mb-md"></div>
+<!-- Header -->
+<div class="flex flex-col items-center text-center mb-lg baseline-rhythm">
+<span class="material-symbols-outlined text-[48px] text-primary-container mb-xs" style="font-variation-settings: 'FILL' 0;">trophy</span>
+<h2 class="font-headline-md text-headline-md text-on-surface">Finish workout?</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Review your session summary below before completing.</p>
+</div>
+<!-- Data Summary Bento Grid -->
+<div class="grid grid-cols-3 gap-xs mb-xl">
+<!-- Data Point 1: Sets -->
+<div class="bg-surface-container rounded-lg p-sm flex flex-col items-center justify-center border border-surface-variant">
+<span class="material-symbols-outlined text-on-surface-variant mb-xs" style="font-size: 20px;">format_list_numbered</span>
+<span class="font-data-lg text-data-lg text-on-surface">18</span>
+<span class="font-label-md text-label-md text-on-surface-variant mt-1">Sets</span>
+</div>
+<!-- Data Point 2: Volume -->
+<div class="bg-surface-container rounded-lg p-sm flex flex-col items-center justify-center border border-surface-variant">
+<span class="material-symbols-outlined text-on-surface-variant mb-xs" style="font-size: 20px;">fitness_center</span>
+<span class="font-data-lg text-data-lg text-on-surface">5200<span class="text-[14px]">kg</span></span>
+<span class="font-label-md text-label-md text-on-surface-variant mt-1">Volume</span>
+</div>
+<!-- Data Point 3: Duration -->
+<div class="bg-surface-container rounded-lg p-sm flex flex-col items-center justify-center border border-surface-variant">
+<span class="material-symbols-outlined text-on-surface-variant mb-xs" style="font-size: 20px;">timer</span>
+<span class="font-data-lg text-data-lg text-primary">52<span class="text-[14px]">m</span></span>
+<span class="font-label-md text-label-md text-primary mt-1">Duration</span>
+</div>
+</div>
+<!-- Actions -->
+<div class="flex gap-sm w-full">
+<button class="flex-1 h-[48px] flex items-center justify-center rounded-lg bg-surface border border-outline-variant font-headline-sm text-headline-sm text-on-surface-variant hover:bg-surface-container transition-colors active:scale-95 duration-150" type="button">
+                    Cancel
+                </button>
+<button class="flex-1 h-[48px] flex items-center justify-center rounded-lg bg-primary-container text-on-primary-container font-headline-sm text-headline-sm hover:bg-primary transition-colors active:scale-95 duration-150" type="button">
+                    Finish
+                </button>
+</div>
+</div>
+</div>
+<!-- Inline animation definition -->
+<style>
+        @keyframes slideUp {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
+        }
+    </style>
+</body></html>

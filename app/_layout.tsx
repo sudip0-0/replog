@@ -2,11 +2,21 @@ import 'react-native-url-polyfill/auto';
 import { Stack } from 'expo-router';
 import { AppProviders } from '@/providers/AppProviders';
 import { StartConflictDialog } from '@/features/workouts/StartConflictDialog';
+import { replogColors } from '@/theme';
 
 export default function RootLayout() {
   return (
     <AppProviders>
-      <Stack screenOptions={{ headerShown: false }}>
+      <Stack
+        screenOptions={{
+          contentStyle: { backgroundColor: replogColors.base },
+          headerShown: false,
+          headerShadowVisible: false,
+          headerStyle: { backgroundColor: replogColors.surface },
+          headerTintColor: replogColors.text,
+          headerTitleStyle: { color: replogColors.text, fontWeight: '700' },
+        }}
+      >
         <Stack.Screen name="(tabs)" />
         <Stack.Screen name="exercises" options={{ headerShown: true, title: 'Exercises' }} />
         <Stack.Screen

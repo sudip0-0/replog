@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>RepLog - Body Metrics</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-secondary": "#2d3038",
+                    "error-container": "#93000a",
+                    "secondary": "#c4c6d0",
+                    "secondary-fixed": "#e0e2ec",
+                    "on-secondary-fixed": "#191c23",
+                    "on-error": "#690005",
+                    "secondary-container": "#44474f",
+                    "on-secondary-container": "#b3b5be",
+                    "on-primary": "#3e2e00",
+                    "on-primary-fixed-variant": "#594400",
+                    "on-background": "#e3e2e6",
+                    "surface-bright": "#38393c",
+                    "primary-fixed": "#ffdf95",
+                    "tertiary-fixed": "#b8eaff",
+                    "surface-variant": "#343538",
+                    "on-secondary-fixed-variant": "#44474f",
+                    "error": "#ffb4ab",
+                    "inverse-surface": "#e3e2e6",
+                    "surface": "#121316",
+                    "outline-variant": "#4e4634",
+                    "tertiary-fixed-dim": "#63d4fa",
+                    "primary": "#ffe5aa",
+                    "surface-container-lowest": "#0d0e11",
+                    "surface-container-low": "#1b1b1f",
+                    "on-surface": "#e3e2e6",
+                    "on-tertiary-fixed-variant": "#004d61",
+                    "on-primary-fixed": "#251a00",
+                    "on-tertiary-container": "#005e74",
+                    "surface-tint": "#f0c03e",
+                    "on-tertiary": "#003544",
+                    "tertiary-container": "#69d9ff",
+                    "primary-container": "#f5c542",
+                    "secondary-fixed-dim": "#c4c6d0",
+                    "on-primary-container": "#6b5200",
+                    "surface-container-high": "#292a2d",
+                    "inverse-on-surface": "#303034",
+                    "primary-fixed-dim": "#f0c03e",
+                    "inverse-primary": "#765a00",
+                    "surface-container": "#1f1f23",
+                    "background": "#121316",
+                    "outline": "#9a907b",
+                    "surface-container-highest": "#343538",
+                    "on-error-container": "#ffdad6",
+                    "on-surface-variant": "#d1c5ae",
+                    "tertiary": "#c5eeff",
+                    "surface-dim": "#121316",
+                    "on-tertiary-fixed": "#001f28"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "base": "4px",
+                    "lg": "24px",
+                    "xs": "8px",
+                    "container-margin": "16px",
+                    "xl": "32px",
+                    "md": "16px",
+                    "sm": "12px",
+                    "gutter": "12px"
+            },
+            "fontFamily": {
+                    "body-lg": [
+                            "Inter"
+                    ],
+                    "display-lg": [
+                            "Inter"
+                    ],
+                    "headline-md": [
+                            "Inter"
+                    ],
+                    "body-md": [
+                            "Inter"
+                    ],
+                    "data-lg": [
+                            "Inter"
+                    ],
+                    "headline-sm": [
+                            "Inter"
+                    ],
+                    "label-md": [
+                            "Inter"
+                    ]
+            },
+            "fontSize": {
+                    "body-lg": [
+                            "16px",
+                            {
+                                    "lineHeight": "24px",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "display-lg": [
+                            "32px",
+                            {
+                                    "lineHeight": "40px",
+                                    "letterSpacing": "-0.02em",
+                                    "fontWeight": "700"
+                            }
+                    ],
+                    "headline-md": [
+                            "24px",
+                            {
+                                    "lineHeight": "32px",
+                                    "letterSpacing": "-0.01em",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "body-md": [
+                            "14px",
+                            {
+                                    "lineHeight": "20px",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "data-lg": [
+                            "20px",
+                            {
+                                    "lineHeight": "24px",
+                                    "letterSpacing": "-0.01em",
+                                    "fontWeight": "700"
+                            }
+                    ],
+                    "headline-sm": [
+                            "18px",
+                            {
+                                    "lineHeight": "24px",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "label-md": [
+                            "12px",
+                            {
+                                    "lineHeight": "16px",
+                                    "letterSpacing": "0.05em",
+                                    "fontWeight": "600"
+                            }
+                    ]
+            }
+        },
+        },
+      }
+    </script>
+<style>
+        /* Custom scrollbar for webkit */
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #343538;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #44474f;
+        }
+        
+        /* Focus styles for inputs */
+        input:focus {
+            outline: none;
+            border-color: #f5c542 !important;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface font-body-lg min-h-screen flex flex-col antialiased selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopAppBar -->
+<header class="bg-surface dark:bg-surface border-b border-outline-variant dark:border-outline-variant flex justify-between items-center h-14 w-full px-md docked full-width top-0 sticky z-40 flat no shadows">
+<button class="text-primary dark:text-primary hover:bg-surface-container-highest dark:hover:bg-surface-container-highest transition-colors active:opacity-70 transition-opacity p-2 -ml-2 rounded-full flex items-center justify-center h-10 w-10">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">arrow_back</span>
+</button>
+<h1 class="font-headline-sm text-headline-sm font-bold text-primary dark:text-primary">Body Metrics</h1>
+<button class="text-primary dark:text-primary hover:bg-surface-container-highest dark:hover:bg-surface-container-highest transition-colors active:opacity-70 transition-opacity p-2 -mr-2 rounded-full flex items-center justify-center h-10 w-10">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">more_vert</span>
+</button>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-1 flex flex-col w-full max-w-2xl mx-auto px-container-margin py-lg gap-lg pb-32">
+<!-- Compact Trend Card -->
+<section class="bg-[#181b22] border border-[#252a33] rounded-lg p-md flex flex-col gap-sm">
+<div class="flex justify-between items-center">
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Weight Trend</h2>
+<div class="bg-surface-container px-2 py-1 rounded text-primary-container font-label-md text-label-md flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">trending_down</span>
+                    -0.5 kg
+                </div>
+</div>
+<!-- Minimalist Graph Visualization Placeholder -->
+<div class="h-24 w-full relative flex items-end gap-1 opacity-80 pt-4">
+<!-- SVG Sparkline for high-end feel -->
+<svg class="w-full h-full preserve-aspect-ratio-none stroke-primary-container fill-none" stroke-width="2" vector-effect="non-scaling-stroke" viewbox="0 0 100 30">
+<path d="M0,5 L10,12 L20,8 L30,15 L40,10 L50,18 L60,14 L70,22 L80,18 L90,25 L100,20"></path>
+</svg>
+<!-- Overlay gradient -->
+<div class="absolute inset-0 bg-gradient-to-t from-[#181b22] to-transparent pointer-events-none"></div>
+</div>
+<div class="flex justify-between items-center font-label-md text-label-md text-on-surface-variant">
+<span>Oct 1</span>
+<span>Today</span>
+</div>
+</section>
+<!-- Input Row -->
+<section class="flex flex-col gap-sm">
+<h2 class="font-headline-sm text-headline-sm text-on-surface px-1">Log Today</h2>
+<div class="flex gap-sm">
+<!-- Weight Input -->
+<div class="flex-1 bg-[#181b22] border border-[#252a33] rounded-lg relative flex items-center px-sm h-[48px] group focus-within:border-primary-container transition-colors">
+<div class="flex flex-col justify-center h-full flex-1">
+<label class="font-label-md text-label-md text-on-surface-variant absolute top-[-10px] left-3 bg-[#181b22] px-1" for="weight-input">Weight</label>
+<input class="w-full bg-transparent border-none text-on-surface font-data-lg text-data-lg focus:ring-0 p-0 text-right pr-1" id="weight-input" step="0.1" type="number" value="82.4"/>
+</div>
+<span class="text-on-surface-variant font-body-md text-body-md pl-1 select-none">kg</span>
+</div>
+<!-- Body Fat Input -->
+<div class="flex-1 bg-[#181b22] border border-[#252a33] rounded-lg relative flex items-center px-sm h-[48px] group focus-within:border-primary-container transition-colors">
+<div class="flex flex-col justify-center h-full flex-1">
+<label class="font-label-md text-label-md text-on-surface-variant absolute top-[-10px] left-3 bg-[#181b22] px-1" for="bf-input">Body Fat</label>
+<input class="w-full bg-transparent border-none text-on-surface font-data-lg text-data-lg focus:ring-0 p-0 text-right pr-1" id="bf-input" step="0.1" type="number" value="14.8"/>
+</div>
+<span class="text-on-surface-variant font-body-md text-body-md pl-1 select-none">%</span>
+</div>
+</div>
+<!-- Action Button -->
+<button class="w-full h-[48px] bg-primary-container text-on-primary-container font-headline-sm text-headline-sm rounded-lg flex items-center justify-center gap-2 mt-xs active:scale-[0.98] transition-transform">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">add</span>
+                Log Entry
+            </button>
+</section>
+<!-- History List -->
+<section class="flex flex-col gap-sm mt-4">
+<h2 class="font-headline-sm text-headline-sm text-on-surface px-1">Recent Entries</h2>
+<div class="flex flex-col gap-base">
+<!-- Entry 1 -->
+<div class="bg-[#181b22] border border-[#252a33] rounded-lg p-sm flex items-center justify-between group">
+<div class="flex items-center gap-md">
+<div class="bg-surface-container h-10 w-10 rounded flex items-center justify-center text-primary-container">
+<span class="material-symbols-outlined">calendar_today</span>
+</div>
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm text-on-surface">Oct 25</span>
+<span class="font-body-md text-body-md text-on-surface-variant">14.8% BF</span>
+</div>
+</div>
+<div class="flex items-center gap-md">
+<span class="font-data-lg text-data-lg text-primary">82.4 kg</span>
+<button class="h-8 w-8 flex items-center justify-center rounded text-on-surface-variant hover:text-error hover:bg-error-container/20 transition-colors active:scale-90">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+</div>
+</div>
+<!-- Entry 2 -->
+<div class="bg-[#181b22] border border-[#252a33] rounded-lg p-sm flex items-center justify-between group">
+<div class="flex items-center gap-md">
+<div class="bg-surface-container h-10 w-10 rounded flex items-center justify-center text-primary-container opacity-70">
+<span class="material-symbols-outlined">calendar_today</span>
+</div>
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm text-on-surface">Oct 22</span>
+<span class="font-body-md text-body-md text-on-surface-variant">15.0% BF</span>
+</div>
+</div>
+<div class="flex items-center gap-md">
+<span class="font-data-lg text-data-lg text-on-surface">82.9 kg</span>
+<button class="h-8 w-8 flex items-center justify-center rounded text-on-surface-variant hover:text-error hover:bg-error-container/20 transition-colors active:scale-90">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+</div>
+</div>
+<!-- Entry 3 -->
+<div class="bg-[#181b22] border border-[#252a33] rounded-lg p-sm flex items-center justify-between group opacity-80">
+<div class="flex items-center gap-md">
+<div class="bg-surface-container h-10 w-10 rounded flex items-center justify-center text-primary-container opacity-50">
+<span class="material-symbols-outlined">calendar_today</span>
+</div>
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm text-on-surface">Oct 18</span>
+<span class="font-body-md text-body-md text-on-surface-variant">--</span>
+</div>
+</div>
+<div class="flex items-center gap-md">
+<span class="font-data-lg text-data-lg text-on-surface">83.1 kg</span>
+<button class="h-8 w-8 flex items-center justify-center rounded text-on-surface-variant hover:text-error hover:bg-error-container/20 transition-colors active:scale-90">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center h-16 px-container-margin bg-surface-container/80 backdrop-blur-md z-50 border-t border-outline-variant dark:border-outline-variant flat no shadows md:hidden">
+<!-- Tab 1 -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant pt-1 hover:bg-surface-container-high dark:hover:bg-surface-container-high transition-colors active:scale-95 transition-transform duration-150 w-16 h-full rounded-lg">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">fitness_center</span>
+<span class="font-label-md text-label-md mt-1 opacity-0 group-focus:opacity-100 hidden">Today</span>
+</button>
+<!-- Tab 2 -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant pt-1 hover:bg-surface-container-high dark:hover:bg-surface-container-high transition-colors active:scale-95 transition-transform duration-150 w-16 h-full rounded-lg">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">assignment</span>
+<span class="font-label-md text-label-md mt-1 opacity-0 hidden">Routines</span>
+</button>
+<!-- Tab 3: History (Active based on "trend/entries" intent) -->
+<button class="flex flex-col items-center justify-center text-primary dark:text-primary border-t-2 border-primary pt-1 hover:bg-surface-container-high dark:hover:bg-surface-container-high transition-colors active:scale-95 transition-transform duration-150 w-16 h-full bg-[#121419]/50">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">history</span>
+<span class="font-label-md text-label-md mt-1">History</span>
+</button>
+<!-- Tab 4 -->
+<button class="flex flex-col items-center justify-center text-on-surface-variant dark:text-on-surface-variant pt-1 hover:bg-surface-container-high dark:hover:bg-surface-container-high transition-colors active:scale-95 transition-transform duration-150 w-16 h-full rounded-lg">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">person</span>
+<span class="font-label-md text-label-md mt-1 opacity-0 hidden">Profile</span>
+</button>
+</nav>
+<!-- Script for simple interactions -->
+<script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Optional: Add simple delete animation
+            const deleteBtns = document.querySelectorAll('button[class*="hover:text-error"]');
+            deleteBtns.forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    const row = this.closest('.group');
+                    row.style.transition = 'all 0.3s ease';
+                    row.style.opacity = '0';
+                    row.style.transform = 'translateX(20px)';
+                    setTimeout(() => {
+                        row.style.display = 'none';
+                    }, 300);
+                });
+            });
+        });
+    </script>
+</body></html>

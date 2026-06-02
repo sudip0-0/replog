@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
-import { View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { Button, HelperText, Text, TextInput } from 'react-native-paper';
 import { useAuth } from './useAuth';
 import { useSyncNow } from '@/features/sync/useSync';
+import { replogColors } from '@/theme';
+import { ui } from '@/theme/styles';
 
-/** Account/auth controls. Works in guest/local mode when Supabase is unset. */
 export function AccountSection() {
   const { status, userId, configured, init, signIn, signUp, signOut } = useAuth();
   const sync = useSyncNow();
@@ -18,11 +19,13 @@ export function AccountSection() {
 
   if (!configured) {
     return (
-      <View style={{ gap: 4 }}>
-        <Text variant="titleMedium">Account</Text>
-        <Text variant="bodyMedium">
-          Running in local-only mode. All data is stored on this device. Add Supabase credentials to
-          enable cloud sync (see README).
+      <View style={styles.wrap}>
+        <Text style={ui.label}>Account</Text>
+        <Text variant="titleMedium" style={styles.title}>
+          Local mode
+        </Text>
+        <Text variant="bodyMedium" style={styles.muted}>
+          Data is stored on this device. Add Supabase credentials to enable cloud sync.
         </Text>
       </View>
     );
@@ -30,9 +33,14 @@ export function AccountSection() {
 
   if (status === 'authenticated') {
     return (
-      <View style={{ gap: 8 }}>
-        <Text variant="titleMedium">Account</Text>
-        <Text variant="bodyMedium">Signed in ({userId?.slice(0, 8)}…). Data syncs to the cloud.</Text>
+      <View style={styles.wrap}>
+        <Text style={ui.label}>Account</Text>
+        <Text variant="titleMedium" style={styles.title}>
+          Signed in
+        </Text>
+        <Text variant="bodyMedium" style={styles.muted}>
+          User {userId?.slice(0, 8)}. Data syncs to the cloud.
+        </Text>
         <Button mode="outlined" onPress={() => void signOut()} accessibilityLabel="Sign out">
           Sign out
         </Button>
@@ -44,29 +52,20 @@ export function AccountSection() {
     setError(null);
     const err = await fn(email.trim(), password);
     if (err) setError(err);
-    else sync.mutate(); // best-effort sync after sign-in; errors surface in SyncSection
+    else sync.mutate();
   };
 
   return (
-    <View style={{ gap: 8 }}>
-      <Text variant="titleMedium">Account</Text>
-      <TextInput
-        label="Email"
-        autoCapitalize="none"
-        keyboardType="email-address"
-        value={email}
-        onChangeText={setEmail}
-        accessibilityLabel="Email"
-      />
-      <TextInput
-        label="Password"
-        secureTextEntry
-        value={password}
-        onChangeText={setPassword}
-        accessibilityLabel="Password"
-      />
-      {error ? <HelperText type="error" visible>{error}</HelperText> : null}
-      <View style={{ flexDirection: 'row', gap: 8 }}>
+    <View style={styles.wrap}>
+      <Text style={ui.label}>Account</Text>
+      <TextInput label="Email" autoCapitalize="none" keyboardType="email-address" value={email} onChangeText={setEmail} accessibilityLabel="Email" />
+      <TextInput label="Password" secureTextEntry value={password} onChangeText={setPassword} accessibilityLabel="Password" />
+      {error ? (
+        <HelperText type="error" visible>
+          {error}
+        </HelperText>
+      ) : null}
+      <View style={styles.actions}>
         <Button mode="contained" onPress={() => void submit(signIn)} accessibilityLabel="Sign in">
           Sign in
         </Button>
@@ -74,7 +73,16 @@ export function AccountSection() {
           Sign up
         </Button>
       </View>
-      <Text variant="bodySmall">You can keep using the app as a guest without signing in.</Text>
+      <Text variant="bodySmall" style={styles.muted}>
+        Guest mode remains available.
+      </Text>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  wrap: { gap: 8, padding: 12 },
+  title: { color: replogColors.text, fontWeight: '700' },
+  muted: { color: replogColors.textMuted },
+  actions: { flexDirection: 'row', gap: 8 },
+});

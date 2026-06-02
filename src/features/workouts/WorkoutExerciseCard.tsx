@@ -1,5 +1,5 @@
-import { Card, Button, Text } from 'react-native-paper';
-import { View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import { Button, Card, Text } from 'react-native-paper';
 import { SetRow } from './SetRow';
 import { RestTimer } from './RestTimer';
 import { ExerciseNoteSection } from '@/features/exercises/ExerciseNoteSection';
@@ -11,6 +11,8 @@ import {
 } from './useWorkout';
 import type { WorkoutExerciseDetail } from './workoutService';
 import { fromKg, type WeightUnit } from '@/domain/units';
+import { replogColors } from '@/theme';
+import { ui } from '@/theme/styles';
 
 interface Props {
   workoutId: string;
@@ -34,9 +36,19 @@ export function WorkoutExerciseCard({ workoutId, detail, unit }: Props) {
   const lastSet = sets[sets.length - 1];
 
   return (
-    <Card mode="contained" style={{ marginBottom: 12 }}>
-      <Card.Title title={exercise?.name ?? 'Exercise'} subtitle={prevText} />
-      <Card.Content style={{ gap: 6 }}>
+    <Card mode="contained" style={[ui.card, styles.card]}>
+      <Card.Content style={styles.content}>
+        <View style={styles.header}>
+          <View style={styles.titleBlock}>
+            <Text variant="titleMedium" style={styles.title}>
+              {exercise?.name ?? 'Exercise'}
+            </Text>
+            <Text variant="bodySmall" numberOfLines={2} style={styles.previous}>
+              {prevText}
+            </Text>
+          </View>
+          <Text style={styles.setCount}>{sets.length}</Text>
+        </View>
         <ExerciseNoteSection exerciseId={workoutExercise.exercise_id} />
         {sets.map((s) => (
           <SetRow
@@ -49,9 +61,10 @@ export function WorkoutExerciseCard({ workoutId, detail, unit }: Props) {
             onRemove={() => removeSet.mutate(s.id)}
           />
         ))}
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+        <View style={styles.footer}>
           <Button
             icon="plus"
+            mode="outlined"
             onPress={() =>
               addSet.mutate({
                 workoutExerciseId: workoutExercise.id,
@@ -64,10 +77,45 @@ export function WorkoutExerciseCard({ workoutId, detail, unit }: Props) {
           >
             Add set
           </Button>
-          {sets.length === 0 ? <Text variant="bodySmall">Add your first set</Text> : null}
+          {sets.length === 0 ? (
+            <Text variant="bodySmall" style={styles.muted}>
+              Add your first set
+            </Text>
+          ) : null}
         </View>
         <RestTimer id={workoutExercise.id} />
       </Card.Content>
     </Card>
   );
 }
+
+const styles = StyleSheet.create({
+  card: { marginBottom: 12, overflow: 'hidden' },
+  content: { gap: 8, paddingHorizontal: 10, paddingVertical: 10 },
+  header: {
+    alignItems: 'flex-start',
+    borderBottomColor: replogColors.outline,
+    borderBottomWidth: 1,
+    flexDirection: 'row',
+    gap: 12,
+    marginHorizontal: -10,
+    marginTop: -10,
+    paddingHorizontal: 12,
+    paddingVertical: 10,
+  },
+  titleBlock: { flex: 1 },
+  title: { color: replogColors.text, fontWeight: '700' },
+  previous: { color: replogColors.textDim, marginTop: 2 },
+  setCount: {
+    ...ui.dataText,
+    color: replogColors.primary,
+    minWidth: 32,
+    textAlign: 'right',
+  },
+  footer: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  muted: { color: replogColors.textDim },
+});

@@ -1,9 +1,11 @@
 import { useState } from 'react';
-import { View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { Button, Dialog, IconButton, List, Menu, Portal, TextInput } from 'react-native-paper';
 import type { ProgressionRule } from '@/domain/schemas';
 import type { RoutineExerciseDetail } from './routineService';
 import { useRemoveRoutineExercise, useUpdateRoutineExercise } from './useRoutines';
+import { replogColors } from '@/theme';
+import { ui } from '@/theme/styles';
 
 const RULES: { value: ProgressionRule; label: string }[] = [
   { value: 'double_progression', label: 'Double progression' },
@@ -51,84 +53,33 @@ export function RoutineExerciseRow({ routineId, detail, canUp, canDown, onMove }
   return (
     <List.Item
       title={detail.exercise?.name ?? 'Exercise'}
-      description={`${re.target_sets} × ${re.target_reps_min}-${re.target_reps_max} · rest ${re.target_rest_sec}s · ${ruleLabel(re.progression_rule)}`}
+      description={`${re.target_sets} x ${re.target_reps_min}-${re.target_reps_max} / rest ${re.target_rest_sec}s / ${ruleLabel(re.progression_rule)}`}
       left={() => (
-        <View style={{ flexDirection: 'row' }}>
-          <IconButton
-            icon="arrow-up"
-            disabled={!canUp}
-            onPress={() => onMove(-1)}
-            accessibilityLabel={`Move ${detail.exercise?.name} up`}
-          />
-          <IconButton
-            icon="arrow-down"
-            disabled={!canDown}
-            onPress={() => onMove(1)}
-            accessibilityLabel={`Move ${detail.exercise?.name} down`}
-          />
+        <View style={styles.iconRow}>
+          <IconButton icon="arrow-up" disabled={!canUp} onPress={() => onMove(-1)} accessibilityLabel={`Move ${detail.exercise?.name} up`} />
+          <IconButton icon="arrow-down" disabled={!canDown} onPress={() => onMove(1)} accessibilityLabel={`Move ${detail.exercise?.name} down`} />
         </View>
       )}
       right={() => (
-        <View style={{ flexDirection: 'row' }}>
-          <IconButton
-            icon="pencil"
-            onPress={() => setEditing(true)}
-            accessibilityLabel={`Edit ${detail.exercise?.name} targets`}
-          />
-          <IconButton
-            icon="delete-outline"
-            onPress={() => remove.mutate(re.id)}
-            accessibilityLabel={`Remove ${detail.exercise?.name} from routine`}
-          />
+        <View style={styles.iconRow}>
+          <IconButton icon="pencil" onPress={() => setEditing(true)} accessibilityLabel={`Edit ${detail.exercise?.name} targets`} />
+          <IconButton icon="delete-outline" onPress={() => remove.mutate(re.id)} accessibilityLabel={`Remove ${detail.exercise?.name} from routine`} />
           <Portal>
-            <Dialog visible={editing} onDismiss={() => setEditing(false)}>
+            <Dialog visible={editing} onDismiss={() => setEditing(false)} style={ui.sheet}>
+              <View style={ui.grabber} />
               <Dialog.Title>{detail.exercise?.name ?? 'Exercise'}</Dialog.Title>
-              <Dialog.Content style={{ gap: 8 }}>
-                <TextInput
-                  dense
-                  label="Sets"
-                  keyboardType="number-pad"
-                  value={sets}
-                  onChangeText={setSets}
-                  accessibilityLabel="Target sets"
-                />
-                <View style={{ flexDirection: 'row', gap: 8 }}>
-                  <TextInput
-                    dense
-                    style={{ flex: 1 }}
-                    label="Min reps"
-                    keyboardType="number-pad"
-                    value={min}
-                    onChangeText={setMin}
-                    accessibilityLabel="Target minimum reps"
-                  />
-                  <TextInput
-                    dense
-                    style={{ flex: 1 }}
-                    label="Max reps"
-                    keyboardType="number-pad"
-                    value={max}
-                    onChangeText={setMax}
-                    accessibilityLabel="Target maximum reps"
-                  />
+              <Dialog.Content style={styles.dialogContent}>
+                <TextInput dense label="Sets" keyboardType="number-pad" value={sets} onChangeText={setSets} accessibilityLabel="Target sets" />
+                <View style={styles.inputRow}>
+                  <TextInput dense style={styles.flex} label="Min reps" keyboardType="number-pad" value={min} onChangeText={setMin} accessibilityLabel="Target minimum reps" />
+                  <TextInput dense style={styles.flex} label="Max reps" keyboardType="number-pad" value={max} onChangeText={setMax} accessibilityLabel="Target maximum reps" />
                 </View>
-                <TextInput
-                  dense
-                  label="Rest (seconds)"
-                  keyboardType="number-pad"
-                  value={rest}
-                  onChangeText={setRest}
-                  accessibilityLabel="Target rest seconds"
-                />
+                <TextInput dense label="Rest (seconds)" keyboardType="number-pad" value={rest} onChangeText={setRest} accessibilityLabel="Target rest seconds" />
                 <Menu
                   visible={menu}
                   onDismiss={() => setMenu(false)}
                   anchor={
-                    <Button
-                      mode="outlined"
-                      onPress={() => setMenu(true)}
-                      accessibilityLabel={`Progression rule: ${ruleLabel(rule)}`}
-                    >
+                    <Button mode="outlined" onPress={() => setMenu(true)} accessibilityLabel={`Progression rule: ${ruleLabel(rule)}`}>
                       {ruleLabel(rule)}
                     </Button>
                   }
@@ -147,7 +98,7 @@ export function RoutineExerciseRow({ routineId, detail, canUp, canDown, onMove }
               </Dialog.Content>
               <Dialog.Actions>
                 <Button onPress={() => setEditing(false)}>Cancel</Button>
-                <Button onPress={save} accessibilityLabel="Save targets">
+                <Button mode="contained" onPress={save} accessibilityLabel="Save targets">
                   Save
                 </Button>
               </Dialog.Actions>
@@ -155,6 +106,24 @@ export function RoutineExerciseRow({ routineId, detail, canUp, canDown, onMove }
           </Portal>
         </View>
       )}
+      style={styles.row}
+      titleStyle={styles.title}
+      descriptionStyle={styles.description}
     />
   );
 }
+
+const styles = StyleSheet.create({
+  row: {
+    backgroundColor: replogColors.surfaceLow,
+    borderColor: replogColors.outline,
+    borderRadius: 8,
+    borderWidth: 1,
+  },
+  title: { color: replogColors.text, fontWeight: '700' },
+  description: { color: replogColors.textMuted },
+  iconRow: { flexDirection: 'row' },
+  dialogContent: { gap: 8 },
+  inputRow: { flexDirection: 'row', gap: 8 },
+  flex: { flex: 1 },
+});
